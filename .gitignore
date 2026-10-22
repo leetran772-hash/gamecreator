@@ -3,3 +3,4 @@ dist
 *.log
 qa-output
 projects/*/.studio/
+.claude/worktrees/
