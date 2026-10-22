@@ -146,9 +146,11 @@ export class Game {
 
   act(action: Action): boolean {
     if (this.state.status !== "playing") return false;
+    const floorBefore = this.state.floor;
     const used = this.playerAct(action);
     if (!used) return false;
-    if (this.state.status === "playing") this.enemiesAct();
+    // Arriving on a new floor gives the player a free turn (no hit on arrival).
+    if (this.state.status === "playing" && this.state.floor === floorBefore) this.enemiesAct();
     this.state.turn++;
     this.state.turnsOnFloor++;
     return true;
@@ -200,6 +202,10 @@ export class Game {
     const it = this.item(inst.itemId);
     const p = this.state.player;
     if (it.kind === "potion" && it.stats.heal) {
+      if (p.hp >= p.maxHp) {
+        this.say("You're already at full health.");
+        return false;
+      }
       const healed = Math.min(p.maxHp - p.hp, rollDice(this.rng.fork(`heal:${uid}`), it.stats.heal).total);
       p.hp += healed;
       this.inventory.remove(uid);

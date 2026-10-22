@@ -2,7 +2,7 @@
   "id": "gba-animation",
   "name": "GBA-style basic animation",
   "category": "Presentation",
-  "whatItIs": "Few-frame, snappy procedural animation (bob, squash, hit flash) for low-poly characters.",
+  "whatItIs": "Few-frame, snappy procedural animation for low-poly characters, time-stepped at 12 fps so it reads like sprite frames: 2-frame idle bob, 4-frame hop with squash on landing, 3-frame attack lunge, 2-frame white hit flash, 5-frame death pop. Driven by core events (attack, enemyDefeated) and position changes.",
   "genres": [
     "retro",
     "roguelike"
@@ -11,10 +11,10 @@
     "visual.styleNotes"
   ],
   "outputs": [
-    "animation clips"
+    "per-entity motion on the Three.js scene graph"
   ],
   "implementations": {
-    "threejs": null,
+    "threejs": "src/engines/three/animation.ts",
     "godot": null
   },
   "dependencies": {
@@ -23,6 +23,7 @@
   },
   "status": "prototype",
   "gotchas": [
-    "Not implemented yet; the preview only lerps positions."
+    "Godot port not written yet: the Godot template only moves entities.",
+    "Lunge offsets the entity's child node, hops move the group: models must keep their pivot at the bottom (Blender cleanup does this)."
   ]
 }

@@ -1,0 +1,33 @@
+{
+  "id": "external-imports",
+  "name": "External imports",
+  "category": "Asset pipelines",
+  "whatItIs": "User uploads (music, SFX, 3D models, textures, fonts, reference images) with required source and license. Processed to the same end state as generated assets, bible-tagged and locked so the agent never regenerates them. Reference images become GPT style references.",
+  "genres": [
+    "any"
+  ],
+  "bibleInputs": [
+    "visual.textureResolution",
+    "visual.polyBudgets",
+    "visual.palette"
+  ],
+  "outputs": [
+    "processed files under assets/",
+    "assets.json records (source, license, locked)"
+  ],
+  "implementations": {
+    "threejs": "src/pipeline/imports.ts",
+    "godot": "same output; engine-independent"
+  },
+  "dependencies": {
+    "hard": [
+      "ffmpeg",
+      "blender"
+    ],
+    "events": []
+  },
+  "status": "prototype",
+  "gotchas": [
+    "Audio of 30 s or more is treated as music unless the type is given."
+  ]
+}

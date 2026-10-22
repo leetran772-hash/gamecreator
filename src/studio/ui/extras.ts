@@ -25,6 +25,8 @@ export function extraAssetActions(a: Any, ctx: Any): Node[] {
 }
 
 export const extraQaButtons: ((ctx: Any) => Node)[] = [
+  (ctx) => h("button", { onclick: () => ctx.act(() => ctx.papi("godot", { method: "POST" }), "Exporting the Godot project") }, "Export to Godot"),
+  (ctx) => h("button", { title: "Needs Godot on the studio machine", onclick: () => ctx.act(() => ctx.papi("godot-qa", { method: "POST" }), "Godot playtest started") }, "Godot playtest"),
   (ctx) =>
     h(
       "button",

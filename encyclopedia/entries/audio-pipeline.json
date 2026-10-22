@@ -1,0 +1,34 @@
+{
+  "id": "audio-pipeline",
+  "name": "Audio pipeline (ElevenLabs)",
+  "category": "Asset pipelines",
+  "whatItIs": "Sound effects, music and character voice lines from ElevenLabs in the bible's audio style, finished to loudness-normalized OGG (music with loop points). Voice lines use one fixed voice ID per character from the bible and are batched behind one approval.",
+  "genres": [
+    "any"
+  ],
+  "bibleInputs": [
+    "audio.sfxStyle",
+    "audio.musicMoods",
+    "audio.voices"
+  ],
+  "outputs": [
+    "assets/audio/<id>.ogg",
+    "assets.json records with tags"
+  ],
+  "implementations": {
+    "threejs": "src/pipeline/audioPipeline.ts",
+    "godot": "same OGG output; engine-independent"
+  },
+  "dependencies": {
+    "hard": [
+      "elevenlabs",
+      "ffmpeg"
+    ],
+    "events": []
+  },
+  "status": "prototype",
+  "gotchas": [
+    "Live ElevenLabs calls not yet exercised with a real key; endpoints and prices in studio/services.json are unverified.",
+    "Game events play assets by tag: sfx:attack, sfx:hit, sfx:hurt, sfx:miss, sfx:pickup, sfx:defeat, sfx:descend, sfx:death, sfx:victory, music:explore."
+  ]
+}

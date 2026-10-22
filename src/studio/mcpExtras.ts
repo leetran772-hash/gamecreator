@@ -7,6 +7,13 @@ import { combineEstimates, estimateConcept, estimateMeshy, estimateMusic, estima
 import { loadRegistry } from "../pipeline/registry";
 import { checkProjectAssets } from "../qa/assets";
 import type { ToolContext } from "./mcp";
+import { execFile } from "node:child_process";
+import { join } from "node:path";
+import { promisify } from "node:util";
+import { exportGodot } from "../../scripts/export-godot";
+import { REPO_ROOT } from "./projects";
+
+const run = promisify(execFile);
 
 export const EVENT_TAGS =
   'Tags that the game plays automatically: "sfx:attack", "sfx:hit", "sfx:hurt", "sfx:miss", "sfx:pickup", "sfx:defeat", "sfx:descend", "sfx:death", "sfx:victory", "music:explore".';
@@ -87,6 +94,32 @@ export function registerExtraTools(server: McpServer, ctx: ToolContext) {
             : estimateSfx()
         : combineEstimates("regenerate", [estimateConcept(), estimateMeshy()]);
       return gated("regenerate", { id }, est, `Regenerate ${a.subject}`, async () => (isAudio ? audio().regenerate(id, true) : ctx.pipeline.regenerate(id, true)));
+    },
+  );
+
+  server.registerTool(
+    "export_godot",
+    {
+      description:
+        "Write a Godot 4 project for this game (genre template + this bible, game.json and cleaned models) to build/godot/<project>. The Godot port is kept identical to the TS core by parity tests.",
+    },
+    async () => {
+      const name = dir.split("/").pop()!;
+      return json(exportGodot({ project: dir, out: join(REPO_ROOT, "build", "godot", name) }));
+    },
+  );
+
+  server.registerTool(
+    "godot_qa",
+    { description: "Run the bot playtest inside Godot headless and compare every run with the TS core. Needs GODOT set.", inputSchema: { runs: z.number().int().min(5).max(500).optional() } },
+    async ({ runs }) => {
+      if (!process.env.GODOT) return ctx.text("Godot isn't configured on this machine (set GODOT=/path/to/godot).");
+      try {
+        const { stdout } = await run("npx", ["tsx", "scripts/godot-qa.ts", "--project", dir, "--runs", String(runs ?? 50)], { cwd: REPO_ROOT, maxBuffer: 1 << 24 });
+        return ctx.text(stdout);
+      } catch (e) {
+        return ctx.text(`GODOT QA FAILED\n${(e as { stdout?: string }).stdout ?? e}`);
+      }
     },
   );
 

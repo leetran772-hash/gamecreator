@@ -14,7 +14,10 @@
     "asset": "tsx scripts/asset.ts",
     "qa:visual": "tsx scripts/visual.ts",
     "studio": "tsx src/studio/server.ts",
-    "mcp": "tsx src/studio/mcp.ts"
+    "mcp": "tsx src/studio/mcp.ts",
+    "godot:export": "tsx scripts/export-godot.ts",
+    "qa:godot": "tsx scripts/godot-qa.ts",
+    "qa:assets": "tsx scripts/asset.ts qa-assets"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

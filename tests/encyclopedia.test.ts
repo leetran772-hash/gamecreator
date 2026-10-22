@@ -12,7 +12,7 @@ describe("encyclopedia", () => {
       for (const path of Object.values(entry.implementations) as (string | null)[])
         if (path && /^(src|engines)\//.test(path)) expect(existsSync(path), path).toBe(true);
       for (const dep of entry.dependencies.hard as string[])
-        if (!["item-schema", "openai", "meshy", "blender"].includes(dep)) expect(ids.has(dep), dep).toBe(true);
+        if (!["item-schema", "openai", "meshy", "blender", "elevenlabs", "ffmpeg"].includes(dep)) expect(ids.has(dep), dep).toBe(true);
     }
   });
 

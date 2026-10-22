@@ -125,9 +125,11 @@ func item(id: String) -> Dictionary:
 func act(action: Dictionary) -> bool:
 	if status != "playing":
 		return false
+	var floor_before: int = floor_num
 	if not _player_act(action):
 		return false
-	if status == "playing":
+	# Arriving on a new floor gives the player a free turn (no hit on arrival).
+	if status == "playing" and floor_num == floor_before:
 		_enemies_act()
 	turn += 1
 	turns_on_floor += 1
@@ -182,6 +184,9 @@ func _use_item(uid: String) -> bool:
 	var it := item(inst.itemId)
 	var p := player
 	if it.kind == "potion" and it.stats.get("heal", "") != "":
+		if p.hp >= p.max_hp:
+			_say("You're already at full health.")
+			return false
 		var healed := mini(p.max_hp - p.hp, Seeder.roll_dice(rng.fork("heal:%s" % uid), it.stats.heal).total)
 		p.hp += healed
 		inventory.remove(uid)

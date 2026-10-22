@@ -220,7 +220,12 @@ function chatPane() {
   messagesEl = h(
     "div",
     { class: "messages", "aria-live": "polite" },
-    ...s.chat.history.map((m: Any) => h("div", { class: `msg ${m.role}` }, m.text)),
+    ...s.chat.history.map((m: Any) => {
+      const el = h("div", { class: `msg ${m.role}` });
+      if (m.role === "assistant") el.innerHTML = lightMarkdown(m.text);
+      else el.textContent = m.text;
+      return el;
+    }),
   );
   streamingEl = h("div", { class: "msg assistant", style: store.streaming ? "" : "display:none" }, store.streaming);
   messagesEl.append(streamingEl);
@@ -246,6 +251,15 @@ function chatPane() {
       ),
     ),
   );
+}
+
+/** Escapes HTML, then renders **bold**, `code` and [links](url) in director replies. */
+function lightMarkdown(text: string) {
+  const esc = text.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+  return esc
+    .replace(/\*\*([^*\n]+)\*\*/g, "<b>$1</b>")
+    .replace(/`([^`\n]+)`/g, "<code>$1</code>")
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 }
 
 function renderStreaming() {
