@@ -1,0 +1,78 @@
+{
+  "palette": {
+    "void": "#05060a",
+    "hull": "#2d3440",
+    "hullLight": "#4b5566",
+    "neon": "#3cf2ff",
+    "magenta": "#ff3caa",
+    "amber": "#ffb000",
+    "rust": "#a34a28",
+    "toxic": "#9cff3c",
+    "white": "#e6edf5",
+    "violet": "#7b4dff"
+  },
+  "materials": {
+    "floor": {
+      "color": "hull",
+      "roughness": 0.6,
+      "metalness": 0.5
+    },
+    "wall": {
+      "color": "hullLight",
+      "roughness": 0.5,
+      "metalness": 0.6
+    },
+    "hero": {
+      "color": "white",
+      "roughness": 0.4,
+      "metalness": 0.3
+    },
+    "droneMat": {
+      "color": "amber",
+      "roughness": 0.3,
+      "metalness": 0.7,
+      "emissive": "amber"
+    },
+    "mutantMat": {
+      "color": "toxic",
+      "roughness": 0.5,
+      "metalness": 0,
+      "emissive": "toxic"
+    },
+    "guardMat": {
+      "color": "rust",
+      "roughness": 0.5,
+      "metalness": 0.6
+    },
+    "aiMat": {
+      "color": "magenta",
+      "roughness": 0.2,
+      "metalness": 0.4,
+      "emissive": "magenta"
+    },
+    "loot": {
+      "color": "neon",
+      "roughness": 0.2,
+      "metalness": 0.6,
+      "emissive": "neon"
+    },
+    "stairs": {
+      "color": "violet",
+      "roughness": 0.4,
+      "metalness": 0.2,
+      "emissive": "violet"
+    }
+  },
+  "scene": {
+    "background": "void",
+    "light": "neon"
+  },
+  "polyBudgets": {
+    "character": 8000,
+    "prop": 2000,
+    "environment": 1500
+  },
+  "textureResolution": 1024,
+  "styleNotes": "Hard-edged low-poly hardware, glowing neon accents, dark hull plates, CRT-era UI feel.",
+  "concepts": []
+}

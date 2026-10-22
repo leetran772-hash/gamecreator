@@ -1,0 +1,18 @@
+{
+  "voices": {
+    "hero": {
+      "voiceId": "",
+      "notes": "Gruff, clipped, ex-marine."
+    },
+    "ship": {
+      "voiceId": "",
+      "notes": "Calm station AI, slightly glitchy."
+    }
+  },
+  "sfxStyle": "Analog synth blips, servo whirs, laser zaps with spring reverb, metal clanks.",
+  "musicMoods": {
+    "explore": "Slow analog synth pads, arpeggio, 80 bpm, loopable",
+    "combat": "Driving synthwave bass, 128 bpm, loopable",
+    "victory": "Bright synth brass stab with arpeggio tail"
+  }
+}

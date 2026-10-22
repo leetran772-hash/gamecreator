@@ -1,0 +1,85 @@
+{
+  "template": "dungeon-crawler",
+  "engines": [
+    "threejs"
+  ],
+  "modules": [
+    "seeder",
+    "level-design",
+    "dnd-combat",
+    "loot-roller",
+    "inventory",
+    "ui-hud"
+  ],
+  "defaultSeed": "frost-mine-1",
+  "floors": 5,
+  "level": {
+    "width": 44,
+    "height": 30,
+    "roomAttempts": 120,
+    "minRooms": 5,
+    "maxRooms": 9,
+    "minRoomSize": 4,
+    "maxRoomSize": 8
+  },
+  "spawns": {
+    "enemiesPerRoom": [
+      0,
+      2
+    ],
+    "itemChancePerRoom": 0.45,
+    "floorItemTable": "floor"
+  },
+  "player": {
+    "inventoryCapacity": 9,
+    "startingItems": [
+      "pistol",
+      "medpatch"
+    ],
+    "xpPerLevel": 60,
+    "hpPerLevel": 6
+  },
+  "entities": {
+    "player": {
+      "behaviors": [
+        "grid-move",
+        "bump-attack",
+        "auto-pickup"
+      ]
+    },
+    "enemy": {
+      "behaviors": [
+        "sleep-until-seen",
+        "chase",
+        "bump-attack"
+      ]
+    }
+  },
+  "controls": {
+    "move": [
+      "WASD",
+      "arrows"
+    ],
+    "wait": [
+      "Space"
+    ],
+    "descend": [
+      "Enter"
+    ],
+    "use": [
+      "1-9"
+    ]
+  },
+  "qa": {
+    "playtestRuns": 200,
+    "maxTurnsPerFloor": 1500,
+    "botWinRate": [
+      0.15,
+      0.9
+    ],
+    "duelRuns": 4000,
+    "minFloorOneDuelWinRate": 0.75,
+    "lootRolls": 20000,
+    "lootTolerance": 0.02
+  }
+}
