@@ -10,9 +10,17 @@ describe("encyclopedia", () => {
       expect(entry.id).toBe(row.id);
       for (const key of ["whatItIs", "bibleInputs", "outputs", "implementations", "dependencies", "status", "gotchas"]) expect(entry).toHaveProperty(key);
       for (const path of Object.values(entry.implementations) as (string | null)[])
-        if (path?.startsWith("src/")) expect(existsSync(path), path).toBe(true);
+        if (path && /^(src|engines)\//.test(path)) expect(existsSync(path), path).toBe(true);
       for (const dep of entry.dependencies.hard as string[])
         if (!["item-schema", "openai", "meshy", "blender"].includes(dep)) expect(ids.has(dep), dep).toBe(true);
+    }
+  });
+
+  it("core modules have both engine implementations", () => {
+    for (const id of ["seeder", "level-design", "dnd-combat", "loot-roller", "inventory", "ui-hud"]) {
+      const entry = JSON.parse(readFileSync(`encyclopedia/entries/${id}.json`, "utf8"));
+      expect(entry.implementations.threejs, id).toMatch(/^src\//);
+      expect(entry.implementations.godot, id).toMatch(/^engines\/godot\/.+\.gd$/);
     }
   });
 });

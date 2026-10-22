@@ -19,7 +19,7 @@
   ],
   "implementations": {
     "threejs": "src/core/combat.ts",
-    "godot": null
+    "godot": "engines/godot/dungeon-crawler/core/combat.gd"
   },
   "dependencies": {
     "hard": [
