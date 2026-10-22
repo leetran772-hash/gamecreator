@@ -1,26 +1,8 @@
 [
   {
-    "id": "ap-mvj7abmo-3n1",
-    "createdAt": "2026-10-22T07:09:18.816Z",
-    "status": "pending",
-    "estimate": {
-      "step": "mood-art",
-      "service": "openai",
-      "usd": 0.07,
-      "detail": "1 mood image"
-    },
-    "action": {
-      "tool": "generate_mood_art",
-      "args": {
-        "scene": "A stout dwarf miner holding up a glowing amber lantern in a frozen mine tunnel, warm pool of light on frosted stone and old wooden support beams, small translucent blue ice spirits peeking from the darkness beyond, cozy-spooky storybook mood, cold blues and warm amber"
-      }
-    },
-    "summary": "Mood art: A stout dwarf miner holding up a glowing amber lantern in a frozen mine tunnel, warm pool of light on frosted stone and old wooden support beams, small translucent blue ice spirits peeking from the darkness beyond, cozy-spooky storybook mood, cold blues and warm amber"
-  },
-  {
-    "id": "ap-mvj7ac3k-25o",
-    "createdAt": "2026-10-22T07:09:19.424Z",
-    "status": "pending",
+    "id": "ap-mvj7ij0v-2dn",
+    "createdAt": "2026-10-22T07:15:41.647Z",
+    "status": "approved",
     "estimate": {
       "step": "concept",
       "service": "openai",
@@ -30,16 +12,17 @@
     "action": {
       "tool": "generate_concept",
       "args": {
-        "subject": "Brann Emberbeard, stout dwarven miner with a braided red-brown beard, wool mining coat, pick on his back, holding a brass lantern with a tiny fire-spirit inside",
+        "subject": "Brann, dwarven miner with lantern",
         "kind": "character"
       }
     },
-    "summary": "Concept image: Brann Emberbeard, stout dwarven miner with a braided red-brown beard, wool mining coat, pick on his back, holding a brass lantern with a tiny fire-spirit inside"
+    "summary": "Concept image: Brann, dwarven miner with lantern",
+    "decidedAt": "2026-10-22T07:16:41.131Z"
   },
   {
-    "id": "ap-mvj7acq4-79t",
-    "createdAt": "2026-10-22T07:09:20.236Z",
-    "status": "pending",
+    "id": "ap-mvj7ijpi-28w",
+    "createdAt": "2026-10-22T07:15:42.534Z",
+    "status": "used",
     "estimate": {
       "step": "concept",
       "service": "openai",
@@ -49,10 +32,11 @@
     "action": {
       "tool": "generate_concept",
       "args": {
-        "subject": "Frost Wisp, small round glowing blue ice spirit with a wispy icy tail and two simple dark eyes, slightly cute",
+        "subject": "Frost Wisp, small ice spirit",
         "kind": "creature"
       }
     },
-    "summary": "Concept image: Frost Wisp, small round glowing blue ice spirit with a wispy icy tail and two simple dark eyes, slightly cute"
+    "summary": "Concept image: Frost Wisp, small ice spirit",
+    "decidedAt": "2026-10-22T07:16:41.097Z"
   }
 ]

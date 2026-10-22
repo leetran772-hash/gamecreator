@@ -2,7 +2,25 @@
   {
     "service": "anthropic",
     "step": "director turn",
-    "usd": 0.7086988,
+    "usd": 0.708699,
     "at": "2026-10-22T07:09:48.624Z"
+  },
+  {
+    "service": "anthropic",
+    "step": "director turn",
+    "usd": 0.199821,
+    "at": "2026-10-22T07:14:05.236Z"
+  },
+  {
+    "service": "anthropic",
+    "step": "director turn",
+    "usd": 0.052071,
+    "at": "2026-10-22T07:15:47.477Z"
+  },
+  {
+    "service": "anthropic",
+    "step": "director turn",
+    "usd": 0.0904493999999999,
+    "at": "2026-10-22T07:16:56.144Z"
   }
 ]

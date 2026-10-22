@@ -76,5 +76,14 @@
   },
   "textureResolution": 1024,
   "styleNotes": "Chunky, rounded low-poly with a storybook feel. The world is cold blues (frosted stone, ice crystals, blue spirit glow); everything warm and friendly is amber (lantern, loot, Brann, stair shafts down). Soft frost rim-light, lantern pool of warm light around the player, darkness beyond. Spooky but never gory: spirits are glowing, translucent and a little cute.",
-  "concepts": []
+  "concepts": [
+    {
+      "id": "frost-wisp-small-ice-spirit",
+      "image": "assets/concepts/frost-wisp-small-ice-spirit.png",
+      "kind": "asset",
+      "subject": "Frost Wisp, small ice spirit",
+      "approved": true,
+      "bibleVersion": 7
+    }
+  ]
 }
