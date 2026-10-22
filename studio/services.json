@@ -18,5 +18,20 @@
     "timeoutMinutes": 20,
     "estimatedCreditsPerModel": 30,
     "estimatedUsdPerCredit": 0.02
+  },
+  "elevenlabs": {
+    "_note": "Request shapes follow the ElevenLabs API docs (POST /v1/sound-generation, /v1/music, /v1/text-to-speech/{voice_id}, header xi-api-key) but have not been called with a real key. Prices are conservative estimates from third-party summaries (Oct 2026: TTS $0.08-0.10 per 1k chars for multilingual models, SFX about $0.12 per generation, music $0.30-0.80 per minute); check elevenlabs.io/pricing/api.",
+    "baseUrl": "https://api.elevenlabs.io",
+    "ttsModel": "eleven_multilingual_v2",
+    "sfxModel": "eleven_text_to_sound_v2",
+    "musicModel": "music_v1",
+    "sfxPromptInfluence": 0.3,
+    "sfxMinSeconds": 0.5,
+    "sfxMaxSeconds": 30,
+    "musicMinMs": 3000,
+    "musicMaxMs": 300000,
+    "estimatedUsdPerSfx": 0.12,
+    "estimatedUsdPerMusicMinute": 0.5,
+    "estimatedUsdPer1kTtsChars": 0.1
   }
 }

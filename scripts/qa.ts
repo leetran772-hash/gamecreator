@@ -5,6 +5,7 @@ import { parseArgs } from "node:util";
 import { loadProject } from "../src/studio/projects";
 import { validateBible } from "../src/bible/validate";
 import { duelTable, lootCheck } from "../src/qa/balance";
+import { checkProjectAssets } from "../src/qa/assets";
 import { playtest } from "../src/qa/playtest";
 
 const { values } = parseArgs({
@@ -53,6 +54,11 @@ for (const k of ["crash", "softlock", "unreachable"]) {
   const list = byKind(k);
   if (list.length) fail(`${list.length} ${k} issue(s), first: seed ${list[0]!.seed} floor ${list[0]!.floor}: ${list[0]!.detail.split("\n")[0]}`);
 }
+
+console.log("\nAssets");
+const assetQa = checkProjectAssets("projects/dungeon-crawler");
+assetQa.issues.forEach((i) => fail(`${i.assetId}: [${i.check}] ${i.message}`));
+if (!assetQa.issues.length) console.log(`  ok (${assetQa.checked} asset(s) checked)`);
 
 console.log(failed ? "\nQA FAILED" : "\nQA PASSED");
 process.exit(failed ? 1 : 0);

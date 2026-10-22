@@ -2,6 +2,7 @@
 
 Usage:
   blender -b --factory-startup -P cleanup.py -- in.glb out.glb '{"targetHeight":1.8,...}'
+  (input may be .glb, .gltf, .fbx or .obj; output is always GLB)
   python cleanup.py -- in.glb out.glb '{...}'          (with the bpy module installed)
 
 Steps: join meshes, normalize scale to targetHeight, pivot at bottom centre,
@@ -91,6 +92,22 @@ def snap_materials(objs, palette):
     return snapped
 
 
+def import_model(path):
+    """GLB/glTF (Meshy output and imports), FBX and OBJ (imports)."""
+    ext = os.path.splitext(path)[1].lower()
+    if ext in (".glb", ".gltf"):
+        bpy.ops.import_scene.gltf(filepath=path)
+    elif ext == ".fbx":
+        bpy.ops.import_scene.fbx(filepath=path)
+    elif ext == ".obj":
+        if hasattr(bpy.ops.wm, "obj_import"):  # Blender 3.2+
+            bpy.ops.wm.obj_import(filepath=path)
+        else:
+            bpy.ops.import_scene.obj(filepath=path)
+    else:
+        raise SystemExit("unsupported model format: " + ext)
+
+
 def export(path, objs):
     select_only(objs)
     bpy.ops.export_scene.gltf(filepath=path, export_format="GLB", use_selection=True, export_apply=True)
@@ -99,7 +116,7 @@ def export(path, objs):
 def main():
     src, out, s = args()
     bpy.ops.wm.read_factory_settings(use_empty=True)
-    bpy.ops.import_scene.gltf(filepath=os.path.abspath(src))
+    import_model(os.path.abspath(src))
 
     objs = mesh_objects()
     if not objs:

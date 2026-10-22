@@ -52,12 +52,36 @@ Add `--dry-run` to any command to run the whole chain with placeholders and no A
 - Approved concepts are sent as style references (OpenAI image edits endpoint) so later concepts stay on-style.
 - Asking for a subject that already exists hits the cache instead of paying again.
 
+### Audio (ElevenLabs), imports, bible versions, asset QA
+
+```bash
+export ELEVENLABS_API_KEY=...
+npm run asset -- sfx "bone clatter" --duration 1.5 --yes     # prompt uses bible audio.sfxStyle
+npm run asset -- music combat --seconds 60 --yes             # mood from bible audio.musicMoods; loop points stored
+npm run asset -- voice warden "Turn back, little candle." --yes   # fixed voice from audio.voices.warden.voiceId
+npm run asset -- voices lines.json --yes                     # [{characterId, text}]: ONE gate for the whole batch
+
+npm run asset -- import boss.ogg --origin purchased-pack --license "Crypt Pack, 1 commercial game" --tag "boss battle"
+npm run asset -- import goblin.fbx --origin commissioned --license "work for hire" --kind character
+npm run asset -- import sketch.png --origin in-house --license "ours" --as reference   # -> bible visual.concepts
+
+npm run asset -- bump-bible        # after a bible change (e.g. palette)
+npm run asset -- stale             # non-locked assets built against an older bible
+npm run asset -- rematerial <id>   # free: re-run Blender cleanup/palette snap on the raw model
+npm run asset -- regenerate <id>   # paid, gated: new concept + Meshy (or the same ElevenLabs request)
+npm run asset -- qa-assets         # floating / wrong scale / over poly budget / off-palette GLBs; OGG checks
+```
+
+- Every audio file (generated or imported) is loudness-normalized with ffmpeg `loudnorm` (music/voice -16 LUFS, SFX -14) and converted to OGG Vorbis; music gets `loopStart`/`loopEnd` (default: whole track). Needs `ffmpeg`/`ffprobe` on the PATH (or `FFMPEG`/`FFPROBE`).
+- Imports need `--origin purchased-pack|commissioned|royalty-free|in-house` and `--license "..."`, are tagged (`--tag`, repeatable), and are **locked** (`source: "imported"`): the agent never regenerates or re-materials them. Type comes from the extension (`--as` to override; audio ≥ 30 s counts as music). Models (glb/gltf/fbx/obj) go through the same Blender cleanup as Meshy output; images are resized to the bible's `textureResolution` with a 256 px thumbnail and 64 px icon; fonts (ttf/otf) are copied and registered.
+- `--dry-run` uses sine tones instead of ElevenLabs, so the ffmpeg step still runs for real. Asset QA also runs as part of `npm run qa`.
+
 ## Status
 
-Working and tested: seeder sub-streams, level generation, combat, loot, inventory, game loop, HUD, Three.js preview (desktop + touch), bible validation, bot playtests, balance sims, visual check, pipeline gates/registry/cache, Blender cleanup (tested with Blender 5.2's bpy module).
+Working and tested: seeder sub-streams, level generation, combat, loot, inventory, game loop, HUD, Three.js preview (desktop + touch), bible validation, bot playtests, balance sims, visual check, pipeline gates/registry/cache, Blender cleanup (tested with Blender 5.2's bpy module; glb/gltf/fbx/obj input), ElevenLabs audio pipeline (mocked API, real ffmpeg processing), external imports, bible versioning (stale/rematerial/regenerate), asset QA.
 
 Not yet done:
-- **Live API calls** to OpenAI and Meshy are written against their documented request shapes and covered by mocked tests, but have not been run with real keys. Check `studio/services.json` (model names, prices) before the first real run.
-- ElevenLabs (music, SFX, voices), external imports, Godot output, GBA-style animation, the chat-plus-preview studio UI, and the Claude Code tool wiring (MCP).
+- **Live API calls** to OpenAI, Meshy and ElevenLabs are written against their documented request shapes and covered by mocked tests, but have not been run with real keys. Check `studio/services.json` (model names, prices) before the first real run.
+- Godot output, GBA-style animation, the chat-plus-preview studio UI, and the Claude Code tool wiring (MCP).
 
 Decision taken: bible files are JSON (open question in the doc). Still open: bring-your-own keys vs hosted, desktop vs web.
