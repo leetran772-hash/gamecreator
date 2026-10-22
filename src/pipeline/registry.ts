@@ -7,6 +7,19 @@ import type { AssetKind } from "./conceptPrompt";
 export type AssetStatus = "concept" | "approved" | "3d" | "cleaned" | "in-game";
 export const STATUS_ORDER: AssetStatus[] = ["concept", "approved", "3d", "cleaned", "in-game"];
 
+export type AudioKind = "music" | "sfx" | "voice";
+export type ImageKind = "texture" | "image" | "reference";
+/** 3D kinds (AssetKind) plus audio, image and font assets. */
+export type AnyAssetKind = AssetKind | AudioKind | ImageKind | "font";
+
+export const MODEL_KINDS: readonly AssetKind[] = ["character", "creature", "prop", "environment"];
+export const AUDIO_KINDS: readonly AudioKind[] = ["music", "sfx", "voice"];
+export const isModelKind = (k: string): k is AssetKind => (MODEL_KINDS as readonly string[]).includes(k);
+export const isAudioKind = (k: string): k is AudioKind => (AUDIO_KINDS as readonly string[]).includes(k);
+
+export type LicenseOrigin = "purchased-pack" | "commissioned" | "royalty-free" | "in-house";
+export const LICENSE_ORIGINS: readonly LicenseOrigin[] = ["purchased-pack", "commissioned", "royalty-free", "in-house"];
+
 export interface CostEntry {
   service: "openai" | "meshy" | "elevenlabs" | "anthropic";
   step: string;
@@ -15,16 +28,30 @@ export interface CostEntry {
   at: string;
 }
 
+export interface AudioInfo {
+  /** Processed OGG, relative to the project folder. */
+  file: string;
+  /** Seconds (ffprobe). */
+  duration: number;
+  /** Music loop points in seconds (default: the whole track). */
+  loopStart?: number;
+  loopEnd?: number;
+  /** Integrated loudness target (LUFS) the file was normalized to, if it was. */
+  lufs?: number;
+}
+
 export interface AssetRecord {
   id: string;
   subject: string;
-  kind: AssetKind;
+  kind: AnyAssetKind;
   description: string;
   status: AssetStatus;
   source: "generated" | "imported";
   /** Imported or hand-fixed assets are locked: the agent never regenerates them. */
   locked: boolean;
-  license?: { origin: string; terms: string };
+  license?: { origin: LicenseOrigin | string; terms: string };
+  /** Bible tags: mood, area or character ("boss battle", "tavern", "warden"). */
+  tags: string[];
   /** Bible version the asset was built against. */
   bibleVersion: number;
   conceptPrompt?: string;
@@ -33,6 +60,14 @@ export interface AssetRecord {
   rawModel?: string;
   model?: string;
   stats?: { triangles: number; lods: number[]; height: number };
+  /** Audio assets: processed OGG and its timing. */
+  audio?: AudioInfo;
+  /** Prompt sent to ElevenLabs (generated audio). */
+  audioPrompt?: string;
+  /** Voice lines: who says what, with which fixed voice. */
+  voice?: { characterId: string; voiceId: string; text: string };
+  /** Other files by role, relative to the project folder (original, image, thumbnail, icon, font). */
+  files?: Record<string, string>;
   costs: CostEntry[];
 }
 
@@ -44,7 +79,9 @@ export const registryPath = (projectDir: string) => join(projectDir, "assets.jso
 
 export function loadRegistry(projectDir: string): Registry {
   const p = registryPath(projectDir);
-  return existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")) as Registry) : { assets: [] };
+  const reg = existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")) as Registry) : { assets: [] };
+  for (const a of reg.assets) a.tags ??= []; // records written before tags existed
+  return reg;
 }
 
 export function saveRegistry(projectDir: string, reg: Registry) {
@@ -57,8 +94,8 @@ export function slugify(s: string): string {
   return normalizeSubject(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "asset";
 }
 
-export function uniqueId(reg: Registry, subject: string): string {
-  const base = slugify(subject);
+export function uniqueId(reg: Registry, subject: string, maxLength = 64): string {
+  const base = slugify(subject).slice(0, maxLength).replace(/-$/, "");
   let id = base;
   for (let i = 2; reg.assets.some((a) => a.id === id); i++) id = `${base}-${i}`;
   return id;

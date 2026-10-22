@@ -6,12 +6,13 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Bible } from "../bible/types";
 import { buildAssetConceptPrompt, polyBudgetFor, type AssetKind } from "./conceptPrompt";
-import { estimateConcept, estimateMeshy, gate, type Estimate } from "./gates";
+import { combineEstimates, estimateConcept, estimateMeshy, gate, type Estimate } from "./gates";
 import { createImageTo3D, downloadBytes, toDataUri, waitForImageTo3D, type MeshyTask } from "./meshy";
 import { generateImage } from "./openaiImages";
 import { boxGlb, PLACEHOLDER_PNG } from "./placeholderGlb";
 import {
   findAsset,
+  isModelKind,
   loadRegistry,
   normalizeSubject,
   saveRegistry,
@@ -89,6 +90,23 @@ export interface ConceptOptions {
   approved: boolean;
   /** Regenerate even if a matching asset exists. */
   force?: boolean;
+  /** Bible tags (mood, area, character). */
+  tags?: string[];
+}
+
+/** Blender cleanup settings for a model kind, taken from the bible. */
+export function cleanupSettings(bible: Bible, kind: AssetKind) {
+  return {
+    targetHeight: TARGET_HEIGHT[kind],
+    maxTriangles: polyBudgetFor(bible, kind),
+    lodRatios: [1, 0.5, 0.25],
+    palette: bible.visual.palette,
+  };
+}
+
+function modelKind(asset: AssetRecord): AssetKind {
+  if (!isModelKind(asset.kind)) throw new Error(`${asset.id} is a ${asset.kind} asset, not a 3D model`);
+  return asset.kind;
 }
 
 export class AssetPipeline {
@@ -137,6 +155,7 @@ export class AssetPipeline {
       status: "concept",
       source: "generated",
       locked: false,
+      tags: o.tags ?? [],
       bibleVersion: bible.meta.version,
       costs: [],
     };
@@ -175,7 +194,7 @@ export class AssetPipeline {
       throw new Error(`${id} needs an approved concept first (status: ${asset.status}). Run: approve ${id}`);
     const est = gate(estimateMeshy(this.services), approved);
     const bible = loadBibleFrom(this.projectDir);
-    const polycount = polyBudgetFor(bible, asset.kind);
+    const polycount = polyBudgetFor(bible, modelKind(asset));
     const uri = toDataUri(readFileSync(this.path(asset.concept)), mimeOf(asset.concept));
     this.log(`Sending concept ${asset.concept} to Meshy (target ${polycount} polys)...`);
     const glb = await this.clients.meshy(uri, polycount, (t) => this.log(`  Meshy ${t.status} ${t.progress ?? 0}%`));
@@ -197,18 +216,49 @@ export class AssetPipeline {
     const bible = loadBibleFrom(this.projectDir);
     const out = this.path("assets", "models", `${id}.glb`);
     mkdirSync(dirname(out), { recursive: true });
-    const settings = {
-      targetHeight: TARGET_HEIGHT[asset.kind],
-      maxTriangles: polyBudgetFor(bible, asset.kind),
-      lodRatios: [1, 0.5, 0.25],
-      palette: bible.visual.palette,
-    };
+    const settings = cleanupSettings(bible, modelKind(asset));
     this.log(`Cleaning ${asset.rawModel} in Blender...`);
     asset.stats = this.clients.blender(this.path(asset.rawModel), out, settings);
     asset.model = this.rel(out);
     asset.status = "cleaned";
     saveRegistry(this.projectDir, reg);
     return asset;
+  }
+
+  /**
+   * Cheap bible update: re-runs only Blender cleanup (scale, budget, palette snap)
+   * on the existing raw model with the current bible, and stamps the asset with
+   * the current bible version. No API spend, so no gate. Refuses locked assets.
+   */
+  rematerial(id: string): AssetRecord {
+    const reg = loadRegistry(this.projectDir);
+    const asset = findAsset(reg, id);
+    if (asset.locked) throw new Error(`${id} is locked; it will not be re-materialed`);
+    if (!asset.rawModel || !existsSync(this.path(asset.rawModel)))
+      throw new Error(`${id} has no raw model to re-material; use regenerate (paid) instead`);
+    const bible = loadBibleFrom(this.projectDir);
+    this.cleanup(id);
+    const after = loadRegistry(this.projectDir);
+    const updated = findAsset(after, id);
+    updated.bibleVersion = bible.meta.version;
+    saveRegistry(this.projectDir, after);
+    return updated;
+  }
+
+  /**
+   * Full redo against the current bible: new concept (GPT), auto-approved, Meshy
+   * image-to-3D and Blender cleanup. One gate covers concept + Meshy. Refuses locked assets.
+   */
+  async regenerate(id: string, approved: boolean): Promise<AssetRecord> {
+    const reg = loadRegistry(this.projectDir);
+    const asset = findAsset(reg, id);
+    if (asset.locked) throw new Error(`${id} is locked; it will not be regenerated`);
+    const kind = modelKind(asset);
+    gate(combineEstimates("regenerate", [estimateConcept(this.services), estimateMeshy(this.services)]), approved);
+    await this.concept(asset.subject, { kind, description: asset.description, approved: true, force: true });
+    this.approve(id);
+    await this.to3d(id, true);
+    return this.cleanup(id);
   }
 
   /** Runs every remaining step for one asset. Gates still apply to each paid step. */
@@ -221,8 +271,9 @@ export class AssetPipeline {
   }
 }
 
-const TARGET_HEIGHT: Record<AssetKind, number> = { character: 1.8, creature: 1.2, prop: 0.8, environment: 2 };
+/** Height in metres Blender scales each model kind to (also what asset QA checks against). */
+export const TARGET_HEIGHT: Record<AssetKind, number> = { character: 1.8, creature: 1.2, prop: 0.8, environment: 2 };
 
-function mimeOf(path: string) {
+export function mimeOf(path: string) {
   return /\.jpe?g$/i.test(path) ? "image/jpeg" : /\.webp$/i.test(path) ? "image/webp" : "image/png";
 }
