@@ -12,7 +12,9 @@
     "qa": "tsx scripts/qa.ts",
     "check": "npm run typecheck && npm test && npm run qa",
     "asset": "tsx scripts/asset.ts",
-    "qa:visual": "tsx scripts/visual.ts"
+    "qa:visual": "tsx scripts/visual.ts",
+    "studio": "tsx src/studio/server.ts",
+    "mcp": "tsx src/studio/mcp.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

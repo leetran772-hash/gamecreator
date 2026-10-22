@@ -3,23 +3,21 @@
 // when the bible points at them, otherwise simple primitives.
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { bible, description } from "../../../projects/dungeon-crawler/index";
 import { Game, type Action } from "../../core/game";
 import { WALL, tileAt } from "../../core/level";
-import { Hud } from "./hud";
 import { botAction } from "../../qa/playtest";
-
-// Every GLB in the project folder, keyed by its project-relative path.
-const modelUrls = import.meta.glob("../../../projects/dungeon-crawler/assets/models/*.glb", {
-  query: "?url",
-  import: "default",
-  eager: true,
-}) as Record<string, string>;
-const modelUrl = (projectPath?: string) =>
-  projectPath ? modelUrls[`../../../projects/dungeon-crawler/${projectPath}`] : undefined;
+import { Animator } from "./animation";
+import { GameAudio } from "./audio";
+import { Hud } from "./hud";
+import { loadProjectData, projectNames } from "./projectData";
 
 const params = new URLSearchParams(location.search);
+const names = projectNames();
+const projectName = params.get("project") ?? (names.includes("dungeon-crawler") ? "dungeon-crawler" : names[0]!);
+const project = loadProjectData(projectName);
+const { bible, description } = project;
 let seed = params.get("seed") ?? description.defaultSeed;
+document.title = bible.meta.title;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -32,19 +30,19 @@ const color = (key: string) => {
   if (!hex) throw new Error(`Palette has no "${key}"`);
   return hex;
 };
+const sceneKeys = bible.visual.scene ?? { background: "void", light: "ember" };
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(color("void"));
-scene.fog = new THREE.Fog(color("void"), 16, 34);
+scene.background = new THREE.Color(color(sceneKeys.background));
+scene.fog = new THREE.Fog(color(sceneKeys.background), 16, 34);
 const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 200);
 
-scene.add(new THREE.HemisphereLight(0xb8b0c8, color("void"), 0.9));
+scene.add(new THREE.HemisphereLight(0xb8b0c8, color(sceneKeys.background), 0.9));
 const sun = new THREE.DirectionalLight(0xffe2c0, 1.2);
-sun.position.set(-8, 20, 6);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, { left: -30, right: 30, top: 30, bottom: -30 });
 scene.add(sun, sun.target);
-const torch = new THREE.PointLight(color("ember"), 30, 9, 1.6);
+const torch = new THREE.PointLight(color(sceneKeys.light), 30, 9, 1.6);
 scene.add(torch);
 
 const materials = new Map<string, THREE.MeshStandardMaterial>();
@@ -75,7 +73,7 @@ function loadModel(url: string) {
 }
 
 /** A primitive now, swapped for the cleaned GLB once it loads. */
-function entityObject(kind: "player" | "enemy" | "item", matKey: string, model?: string, enemyId?: string): THREE.Object3D {
+function entityObject(kind: "player" | "enemy" | "item", matKey: string, model?: string, size = 0.75, round = false): THREE.Object3D {
   const group = new THREE.Group();
   let mesh: THREE.Mesh;
   if (kind === "player") {
@@ -85,37 +83,45 @@ function entityObject(kind: "player" | "enemy" | "item", matKey: string, model?:
     mesh = new THREE.Mesh(new THREE.OctahedronGeometry(0.2), material("loot"));
     mesh.position.y = 0.35;
   } else {
-    const size = enemyId === "rat" ? 0.35 : enemyId === "slime" ? 0.55 : 0.75;
-    const geo = enemyId === "slime" ? new THREE.SphereGeometry(size / 2, 10, 6) : new THREE.ConeGeometry(size / 2.4, size * 1.3, 6);
+    const geo = round ? new THREE.SphereGeometry(size / 2, 10, 6) : new THREE.ConeGeometry(size / 2.4, size * 1.3, 6);
     mesh = new THREE.Mesh(geo, material(matKey));
-    mesh.position.y = enemyId === "slime" ? size / 2.4 : size * 0.65;
+    mesh.position.y = round ? size / 2.4 : size * 0.65;
   }
   mesh.castShadow = true;
-  group.add(mesh);
-  const url = modelUrl(model);
+  const holder = new THREE.Group(); // animated child: lunges move this, hops move the group
+  holder.add(mesh);
+  group.add(holder);
+  const url = project.fileUrl(model);
   if (url) {
     loadModel(url)
       .then((m) => {
-        group.remove(mesh);
+        holder.remove(mesh);
         const clone = m.clone(true);
         clone.traverse((o) => (o.castShadow = true));
-        group.add(clone);
+        holder.add(clone);
       })
       .catch((err) => console.warn(`Model ${model} failed to load, keeping primitive`, err));
   }
   return group;
 }
 
+/** Primitive size from the stat block, so tougher enemies read bigger. */
+const enemySize = (hp: number) => Math.min(0.95, 0.32 + hp / 40);
+
 let game: Game;
 let hud: Hud;
+let animator: Animator;
+const audio = new GameAudio(project);
 const world = new THREE.Group();
 scene.add(world);
 const objects = new Map<string, THREE.Object3D>();
+const lastPos = new Map<string, string>();
 let floorShown = 0;
 
 function buildFloor() {
   world.clear();
   objects.clear();
+  lastPos.clear();
   const l = game.state.level;
   const floors: [number, number][] = [];
   const walls: [number, number][] = [];
@@ -123,7 +129,6 @@ function buildFloor() {
     for (let x = -1; x <= l.width; x++) {
       if (tileAt(l, x, y) !== WALL) floors.push([x, y]);
       else {
-        // Only walls that touch a floor tile.
         let edge = false;
         for (let dy = -1; dy <= 1 && !edge; dy++) for (let dx = -1; dx <= 1; dx++) if (tileAt(l, x + dx, y + dy) !== WALL) edge = true;
         if (edge) walls.push([x, y]);
@@ -146,31 +151,44 @@ function sync(dt: number, t: number) {
   const s = game.state;
   if (floorShown !== s.floor) buildFloor();
   const alive = new Set<string>();
-  const place = (uid: string, make: () => THREE.Object3D, x: number, y: number, snap = false) => {
+  const place = (uid: string, make: () => THREE.Object3D, x: number, y: number, animate: boolean) => {
     alive.add(uid);
     let o = objects.get(uid);
     if (!o) {
       objects.set(uid, (o = make()));
       o.position.set(x, 0, y);
       world.add(o);
+      if (animate) animator.track(uid, o);
     }
-    const k = snap ? 1 : 1 - Math.pow(0.0001, dt);
+    const key = `${x},${y}`;
+    if (animate && lastPos.has(uid) && lastPos.get(uid) !== key) animator.hop(uid);
+    lastPos.set(uid, key);
+    const k = animate ? 1 - Math.pow(0.0001, dt) : 1;
     o.position.x += (x - o.position.x) * k;
     o.position.z += (y - o.position.z) * k;
     return o;
   };
   const p = s.player;
-  place("player", () => entityObject("player", bible.lore.player.material, bible.lore.player.model), p.pos.x, p.pos.y);
+  place("player", () => entityObject("player", bible.lore.player.material, bible.lore.player.model), p.pos.x, p.pos.y, true);
   for (const e of s.enemies) {
     const def = bible.lore.bestiary[e.defId]!;
-    place(e.uid, () => entityObject("enemy", def.material, def.model, def.id), e.pos.x, e.pos.y);
+    place(e.uid, () => entityObject("enemy", def.material, def.model, enemySize(def.hp), def.ac < 10), e.pos.x, e.pos.y, true);
   }
   for (const g of s.ground) {
-    const o = place(g.item.uid, () => entityObject("item", "loot", game.item(g.item.itemId).model), g.pos.x, g.pos.y, true);
-    o.rotation.y = t * 1.5;
-    o.position.y = Math.sin(t * 2 + g.pos.x) * 0.05;
+    const o = place(g.item.uid, () => entityObject("item", "loot", game.item(g.item.itemId).model), g.pos.x, g.pos.y, false);
+    o.rotation.y = (Math.floor(t * 8) / 8) * 1.5; // stepped spin
+    o.position.y = Math.floor(t * 4) % 2 ? 0.05 : 0;
   }
-  for (const [uid, o] of objects) if (!alive.has(uid)) (world.remove(o), objects.delete(uid));
+  for (const [uid, o] of objects)
+    if (!alive.has(uid)) {
+      objects.delete(uid);
+      lastPos.delete(uid);
+      animator.untrack(uid);
+      // Defeated enemies (uids start with f<floor>) play a death pop; picked-up items just vanish.
+      if (/^f\d+r\d+e\d+$/.test(uid)) animator.die(o);
+      else world.remove(o);
+    }
+  animator.update(dt);
 
   const po = objects.get("player")!;
   torch.position.set(po.position.x, 1.6, po.position.z);
@@ -185,11 +203,22 @@ function newRun(nextSeed = seed) {
   seed = nextSeed;
   game = new Game(bible, description, seed);
   hud = new Hud(game, bible);
+  animator = new Animator();
+  world.clear();
+  objects.clear();
+  lastPos.clear();
   floorShown = 0;
+  audio.bind(game.events);
+  game.events.on("attack", (e) => {
+    const target = objects.get(e.defender);
+    if (target) animator.lunge(e.attacker, target.position);
+    if (e.hit) animator.flash(e.defender);
+  });
   // Hooks for the headless visual check (scripts/visual.ts).
   Object.assign(window, {
     __qa: {
       game,
+      project: project.name,
       botStep: () => game.act(botAction(game)),
       stats: () => ({ calls: renderer.info.render.calls, triangles: renderer.info.render.triangles }),
     },
@@ -219,6 +248,7 @@ const PAD: Record<string, Action> = {
 };
 
 addEventListener("keydown", (e) => {
+  audio.unlock();
   if (e.repeat && e.code === "Enter") return;
   const action = KEYS[e.code];
   if (action) {
@@ -229,6 +259,7 @@ addEventListener("keydown", (e) => {
     if (inst) game.act({ type: "use", uid: inst.uid });
   }
 });
+addEventListener("pointerdown", () => audio.unlock());
 document.querySelectorAll<HTMLButtonElement>("#pad button").forEach((b) =>
   b.addEventListener("click", () => game.act(PAD[b.dataset.k!]!)),
 );

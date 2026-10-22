@@ -12,17 +12,64 @@
     "steel": "#9aa5b1"
   },
   "materials": {
-    "floor": { "color": "stone", "roughness": 0.95, "metalness": 0 },
-    "wall": { "color": "stoneLight", "roughness": 0.9, "metalness": 0 },
-    "hero": { "color": "steel", "roughness": 0.4, "metalness": 0.6 },
-    "boneMat": { "color": "bone", "roughness": 0.8, "metalness": 0 },
-    "slime": { "color": "moss", "roughness": 0.2, "metalness": 0 },
-    "cultist": { "color": "blood", "roughness": 0.7, "metalness": 0 },
-    "wraith": { "color": "arcane", "roughness": 0.3, "metalness": 0, "emissive": "arcane" },
-    "loot": { "color": "gold", "roughness": 0.3, "metalness": 0.8, "emissive": "ember" },
-    "stairs": { "color": "ember", "roughness": 0.5, "metalness": 0, "emissive": "ember" }
+    "floor": {
+      "color": "stone",
+      "roughness": 0.95,
+      "metalness": 0
+    },
+    "wall": {
+      "color": "stoneLight",
+      "roughness": 0.9,
+      "metalness": 0
+    },
+    "hero": {
+      "color": "steel",
+      "roughness": 0.4,
+      "metalness": 0.6
+    },
+    "boneMat": {
+      "color": "bone",
+      "roughness": 0.8,
+      "metalness": 0
+    },
+    "slime": {
+      "color": "moss",
+      "roughness": 0.2,
+      "metalness": 0
+    },
+    "cultist": {
+      "color": "blood",
+      "roughness": 0.7,
+      "metalness": 0
+    },
+    "wraith": {
+      "color": "arcane",
+      "roughness": 0.3,
+      "metalness": 0,
+      "emissive": "arcane"
+    },
+    "loot": {
+      "color": "gold",
+      "roughness": 0.3,
+      "metalness": 0.8,
+      "emissive": "ember"
+    },
+    "stairs": {
+      "color": "ember",
+      "roughness": 0.5,
+      "metalness": 0,
+      "emissive": "ember"
+    }
   },
-  "polyBudgets": { "character": 8000, "prop": 2000, "environment": 1500 },
+  "scene": {
+    "background": "void",
+    "light": "ember"
+  },
+  "polyBudgets": {
+    "character": 8000,
+    "prop": 2000,
+    "environment": 1500
+  },
   "textureResolution": 1024,
   "styleNotes": "Low-poly with flat-shaded faces, limited palette, warm candle light against cold stone. Silhouettes readable from a top-down camera.",
   "concepts": []

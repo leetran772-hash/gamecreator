@@ -1,9 +1,17 @@
 // Runs every automated check for a project and exits non-zero on problems.
-// Usage: npm run qa
-import { bible, description } from "../projects/dungeon-crawler/index";
+// Usage: npm run qa [-- --project projects/<name>] [--runs N] [--json]
+import { resolve } from "node:path";
+import { parseArgs } from "node:util";
+import { loadProject } from "../src/studio/projects";
 import { validateBible } from "../src/bible/validate";
 import { duelTable, lootCheck } from "../src/qa/balance";
 import { playtest } from "../src/qa/playtest";
+
+const { values } = parseArgs({
+  options: { project: { type: "string", default: "projects/dungeon-crawler" }, runs: { type: "string" } },
+});
+const { bible, description } = loadProject(resolve(values.project!));
+if (values.runs) description.qa.playtestRuns = Number(values.runs);
 
 let failed = false;
 const fail = (msg: string) => {

@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "studio": {
+      "command": "npx",
+      "args": ["tsx", "src/studio/mcp.ts"],
+      "env": { "STUDIO_PROJECT_DIR": "projects/dungeon-crawler" }
+    }
+  }
+}

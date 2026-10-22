@@ -1,0 +1,75 @@
+{
+  "palette": {
+    "void": "#2b2420",
+    "soil": "#7a5a43",
+    "soilLight": "#9b7656",
+    "leaf": "#7fb069",
+    "berry": "#d7385e",
+    "petal": "#f4c2c2",
+    "honey": "#f2b134",
+    "sky": "#a9d6e5",
+    "cream": "#f7efe2",
+    "bark": "#5b3e2b"
+  },
+  "materials": {
+    "floor": {
+      "color": "soil",
+      "roughness": 0.95,
+      "metalness": 0
+    },
+    "wall": {
+      "color": "soilLight",
+      "roughness": 0.9,
+      "metalness": 0
+    },
+    "hero": {
+      "color": "cream",
+      "roughness": 0.6,
+      "metalness": 0
+    },
+    "beetleMat": {
+      "color": "leaf",
+      "roughness": 0.3,
+      "metalness": 0.2
+    },
+    "mothMat": {
+      "color": "petal",
+      "roughness": 0.7,
+      "metalness": 0
+    },
+    "badgerMat": {
+      "color": "bark",
+      "roughness": 0.8,
+      "metalness": 0
+    },
+    "waspMat": {
+      "color": "honey",
+      "roughness": 0.4,
+      "metalness": 0
+    },
+    "loot": {
+      "color": "berry",
+      "roughness": 0.3,
+      "metalness": 0,
+      "emissive": "honey"
+    },
+    "stairs": {
+      "color": "sky",
+      "roughness": 0.5,
+      "metalness": 0,
+      "emissive": "sky"
+    }
+  },
+  "scene": {
+    "background": "void",
+    "light": "honey"
+  },
+  "polyBudgets": {
+    "character": 5000,
+    "prop": 1500,
+    "environment": 1200
+  },
+  "textureResolution": 512,
+  "styleNotes": "Chunky rounded low-poly, pastel palette, soft warm light, big friendly eyes, nothing scary.",
+  "concepts": []
+}

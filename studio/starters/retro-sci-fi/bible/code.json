@@ -1,0 +1,40 @@
+{
+  "godot": {
+    "entityStructure": "One scene per entity (CharacterBody3D root, MeshInstance3D from GLB, Area3D for interaction). Logic in a script that reads stats from the bible JSON.",
+    "controls": {
+      "move": [
+        "WASD",
+        "arrows"
+      ],
+      "wait": [
+        "Space"
+      ],
+      "descend": [
+        "Enter"
+      ],
+      "use": [
+        "1-9"
+      ]
+    },
+    "saves": "Save the seed, floor, turn and inventory to user://save.json; the floor is regenerated from the seed."
+  },
+  "threejs": {
+    "entityStructure": "Engine-neutral core owns state; the renderer keeps a Map<uid, Object3D> and syncs from state each frame. GLB via GLTFLoader, primitive fallback.",
+    "controls": {
+      "move": [
+        "WASD",
+        "arrows"
+      ],
+      "wait": [
+        "Space"
+      ],
+      "descend": [
+        "Enter"
+      ],
+      "use": [
+        "1-9"
+      ]
+    },
+    "saves": "localStorage key per project: seed, floor, turn and inventory."
+  }
+}

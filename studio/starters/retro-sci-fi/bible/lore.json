@@ -1,0 +1,349 @@
+{
+  "tone": "Lonely and tense with dry humour from the station AI.",
+  "rules": [
+    "Turn-based: every action is one turn; hostiles act after you.",
+    "Fire: d20 + aim vs armor rating. Natural 20 is a critical hit.",
+    "Reach the escape pod on deck 5."
+  ],
+  "factions": [
+    {
+      "id": "drones",
+      "name": "Maintenance Drones",
+      "description": "Still following a corrupted work order."
+    },
+    {
+      "id": "mutants",
+      "name": "Spore Crew",
+      "description": "What's left of the mining crew."
+    }
+  ],
+  "characters": [
+    {
+      "id": "hero",
+      "name": "Vance",
+      "role": "player",
+      "description": "Salvage contractor who took the wrong job."
+    },
+    {
+      "id": "ship",
+      "name": "KEPLER",
+      "role": "guide",
+      "description": "The station AI, polite and unreliable."
+    }
+  ],
+  "player": {
+    "name": "Vance",
+    "hp": 24,
+    "ac": 12,
+    "attackBonus": 3,
+    "damage": "1d4+1",
+    "material": "hero"
+  },
+  "bestiary": {
+    "scuttler": {
+      "id": "scuttler",
+      "name": "Scuttle Drone",
+      "description": "Palm-sized repair bot with a cutting laser.",
+      "material": "droneMat",
+      "hp": 4,
+      "ac": 10,
+      "attackBonus": 2,
+      "damage": "1d3",
+      "xp": 10,
+      "minFloor": 1,
+      "spawnWeight": 5,
+      "sightRange": 6,
+      "lootTable": "scrap"
+    },
+    "welder": {
+      "id": "welder",
+      "name": "Welder Drone",
+      "description": "Hovering arc welder.",
+      "material": "droneMat",
+      "hp": 9,
+      "ac": 12,
+      "attackBonus": 3,
+      "damage": "1d6",
+      "xp": 25,
+      "minFloor": 1,
+      "spawnWeight": 4,
+      "sightRange": 7,
+      "lootTable": "scrap"
+    },
+    "sporeling": {
+      "id": "sporeling",
+      "name": "Sporeling",
+      "description": "A crew member, mostly fungus now.",
+      "material": "mutantMat",
+      "hp": 14,
+      "ac": 9,
+      "attackBonus": 3,
+      "damage": "1d6+1",
+      "xp": 30,
+      "minFloor": 2,
+      "spawnWeight": 3,
+      "sightRange": 4,
+      "lootTable": "crew"
+    },
+    "guard": {
+      "id": "guard",
+      "name": "Security Mech",
+      "description": "Bipedal, armoured, polite.",
+      "material": "guardMat",
+      "hp": 16,
+      "ac": 13,
+      "attackBonus": 4,
+      "damage": "1d8+1",
+      "xp": 50,
+      "minFloor": 3,
+      "spawnWeight": 3,
+      "sightRange": 8,
+      "lootTable": "security"
+    },
+    "core": {
+      "id": "core",
+      "name": "Rogue Subroutine",
+      "description": "A hologram with teeth.",
+      "material": "aiMat",
+      "hp": 22,
+      "ac": 14,
+      "attackBonus": 5,
+      "damage": "2d6",
+      "xp": 90,
+      "minFloor": 4,
+      "spawnWeight": 2,
+      "sightRange": 9,
+      "lootTable": "security"
+    }
+  },
+  "items": {
+    "pistol": {
+      "id": "pistol",
+      "name": "Rivet Pistol",
+      "kind": "weapon",
+      "rarity": "common",
+      "stats": {
+        "attackBonus": 0,
+        "damage": "1d4+1"
+      },
+      "icon": "🔫"
+    },
+    "laser": {
+      "id": "laser",
+      "name": "Mining Laser",
+      "kind": "weapon",
+      "rarity": "uncommon",
+      "stats": {
+        "attackBonus": 1,
+        "damage": "1d6+1"
+      },
+      "icon": "🔦"
+    },
+    "railgun": {
+      "id": "railgun",
+      "name": "Rail Driver",
+      "kind": "weapon",
+      "rarity": "rare",
+      "stats": {
+        "attackBonus": 1,
+        "damage": "1d10+2"
+      },
+      "icon": "⚡"
+    },
+    "plasma": {
+      "id": "plasma",
+      "name": "Plasma Caster",
+      "kind": "weapon",
+      "rarity": "epic",
+      "stats": {
+        "attackBonus": 2,
+        "damage": "2d6+2"
+      },
+      "icon": "☄️"
+    },
+    "vest": {
+      "id": "vest",
+      "name": "Padded Vest",
+      "kind": "armor",
+      "rarity": "common",
+      "stats": {
+        "armorClass": 13
+      },
+      "icon": "🦺"
+    },
+    "hardsuit": {
+      "id": "hardsuit",
+      "name": "Hardsuit",
+      "kind": "armor",
+      "rarity": "uncommon",
+      "stats": {
+        "armorClass": 15
+      },
+      "icon": "🧑‍🚀"
+    },
+    "exo": {
+      "id": "exo",
+      "name": "Exo-frame",
+      "kind": "armor",
+      "rarity": "rare",
+      "stats": {
+        "armorClass": 17
+      },
+      "icon": "🤖"
+    },
+    "medpatch": {
+      "id": "medpatch",
+      "name": "Med Patch",
+      "kind": "potion",
+      "rarity": "common",
+      "stats": {
+        "heal": "2d4+4"
+      },
+      "icon": "🩹"
+    },
+    "nanokit": {
+      "id": "nanokit",
+      "name": "Nanite Kit",
+      "kind": "potion",
+      "rarity": "rare",
+      "stats": {
+        "heal": "4d4+8"
+      },
+      "icon": "💉"
+    },
+    "chip": {
+      "id": "chip",
+      "name": "Credit Chip",
+      "kind": "treasure",
+      "rarity": "common",
+      "stats": {
+        "value": 10
+      },
+      "icon": "💳"
+    },
+    "core_sample": {
+      "id": "core_sample",
+      "name": "Exotic Core Sample",
+      "kind": "treasure",
+      "rarity": "rare",
+      "stats": {
+        "value": 100
+      },
+      "icon": "💎"
+    }
+  },
+  "lootTables": {
+    "scrap": {
+      "rolls": 1,
+      "nothingWeight": 5,
+      "entries": [
+        {
+          "item": "chip",
+          "weight": 3
+        },
+        {
+          "item": "medpatch",
+          "weight": 2
+        }
+      ]
+    },
+    "crew": {
+      "rolls": 1,
+      "nothingWeight": 3,
+      "entries": [
+        {
+          "item": "chip",
+          "weight": 4
+        },
+        {
+          "item": "medpatch",
+          "weight": 3
+        },
+        {
+          "item": "laser",
+          "weight": 1
+        },
+        {
+          "item": "vest",
+          "weight": 1
+        },
+        {
+          "item": "hardsuit",
+          "weight": 0.5
+        }
+      ]
+    },
+    "security": {
+      "rolls": 2,
+      "nothingWeight": 4,
+      "entries": [
+        {
+          "item": "chip",
+          "weight": 4
+        },
+        {
+          "item": "medpatch",
+          "weight": 3
+        },
+        {
+          "item": "nanokit",
+          "weight": 1
+        },
+        {
+          "item": "railgun",
+          "weight": 1
+        },
+        {
+          "item": "hardsuit",
+          "weight": 1
+        },
+        {
+          "item": "exo",
+          "weight": 0.4
+        },
+        {
+          "item": "plasma",
+          "weight": 0.2
+        },
+        {
+          "item": "core_sample",
+          "weight": 0.5
+        }
+      ]
+    },
+    "floor": {
+      "rolls": 1,
+      "nothingWeight": 1,
+      "entries": [
+        {
+          "item": "medpatch",
+          "weight": 4
+        },
+        {
+          "item": "chip",
+          "weight": 3
+        },
+        {
+          "item": "laser",
+          "weight": 1
+        },
+        {
+          "item": "vest",
+          "weight": 1.5
+        },
+        {
+          "item": "hardsuit",
+          "weight": 0.7
+        },
+        {
+          "item": "railgun",
+          "weight": 0.4
+        },
+        {
+          "item": "core_sample",
+          "weight": 0.3
+        }
+      ]
+    }
+  }
+}

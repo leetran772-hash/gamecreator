@@ -1,0 +1,344 @@
+{
+  "tone": "Warm and silly. Nobody dies; critters 'scamper off' and the hedgehog 'curls up for a nap'.",
+  "rules": [
+    "Turn-based: every action is one turn; critters act after you.",
+    "Shoo: d20 + shoo bonus vs critter grumpiness (AC). Natural 20 is a big shoo.",
+    "Reach the sunny meadow below floor 5."
+  ],
+  "factions": [
+    {
+      "id": "critters",
+      "name": "Grumpy Critters",
+      "description": "Burrow neighbours who really want a nap."
+    }
+  ],
+  "characters": [
+    {
+      "id": "hero",
+      "name": "Pip",
+      "role": "player",
+      "description": "A young hedgehog on her first big adventure."
+    },
+    {
+      "id": "grandmole",
+      "name": "Grandmole",
+      "role": "guide",
+      "description": "Knows every tunnel, forgets every name."
+    }
+  ],
+  "player": {
+    "name": "Pip",
+    "hp": 24,
+    "ac": 12,
+    "attackBonus": 3,
+    "damage": "1d4+1",
+    "material": "hero"
+  },
+  "bestiary": {
+    "beetle": {
+      "id": "beetle",
+      "name": "Bumble Beetle",
+      "description": "Round, shiny and stubborn.",
+      "material": "beetleMat",
+      "hp": 4,
+      "ac": 10,
+      "attackBonus": 2,
+      "damage": "1d3",
+      "xp": 10,
+      "minFloor": 1,
+      "spawnWeight": 5,
+      "sightRange": 6,
+      "lootTable": "common"
+    },
+    "moth": {
+      "id": "moth",
+      "name": "Dusty Moth",
+      "description": "Flutters in your face.",
+      "material": "mothMat",
+      "hp": 8,
+      "ac": 12,
+      "attackBonus": 3,
+      "damage": "1d6",
+      "xp": 25,
+      "minFloor": 1,
+      "spawnWeight": 4,
+      "sightRange": 7,
+      "lootTable": "common"
+    },
+    "badger": {
+      "id": "badger",
+      "name": "Sleepy Badger",
+      "description": "Woken up and not happy about it.",
+      "material": "badgerMat",
+      "hp": 14,
+      "ac": 9,
+      "attackBonus": 3,
+      "damage": "1d6+1",
+      "xp": 30,
+      "minFloor": 2,
+      "spawnWeight": 3,
+      "sightRange": 4,
+      "lootTable": "uncommon"
+    },
+    "wasp": {
+      "id": "wasp",
+      "name": "Wasp Sergeant",
+      "description": "Takes the hive very seriously.",
+      "material": "waspMat",
+      "hp": 16,
+      "ac": 13,
+      "attackBonus": 4,
+      "damage": "1d8+1",
+      "xp": 50,
+      "minFloor": 3,
+      "spawnWeight": 3,
+      "sightRange": 8,
+      "lootTable": "boss"
+    },
+    "owl": {
+      "id": "owl",
+      "name": "Grumpy Owl",
+      "description": "Up past its bedtime.",
+      "material": "mothMat",
+      "hp": 22,
+      "ac": 14,
+      "attackBonus": 5,
+      "damage": "2d6",
+      "xp": 90,
+      "minFloor": 4,
+      "spawnWeight": 2,
+      "sightRange": 9,
+      "lootTable": "boss"
+    }
+  },
+  "items": {
+    "twig": {
+      "id": "twig",
+      "name": "Pointy Twig",
+      "kind": "weapon",
+      "rarity": "common",
+      "stats": {
+        "attackBonus": 0,
+        "damage": "1d4+1"
+      },
+      "icon": "🌿"
+    },
+    "acornSling": {
+      "id": "acornSling",
+      "name": "Acorn Sling",
+      "kind": "weapon",
+      "rarity": "uncommon",
+      "stats": {
+        "attackBonus": 1,
+        "damage": "1d6+1"
+      },
+      "icon": "🌰"
+    },
+    "pinecone": {
+      "id": "pinecone",
+      "name": "Pinecone Mace",
+      "kind": "weapon",
+      "rarity": "rare",
+      "stats": {
+        "attackBonus": 1,
+        "damage": "1d10+2"
+      },
+      "icon": "🌲"
+    },
+    "sunflower": {
+      "id": "sunflower",
+      "name": "Sunflower Staff",
+      "kind": "weapon",
+      "rarity": "epic",
+      "stats": {
+        "attackBonus": 2,
+        "damage": "2d6+2"
+      },
+      "icon": "🌻"
+    },
+    "leafCloak": {
+      "id": "leafCloak",
+      "name": "Leaf Cloak",
+      "kind": "armor",
+      "rarity": "common",
+      "stats": {
+        "armorClass": 13
+      },
+      "icon": "🍃"
+    },
+    "acornHelm": {
+      "id": "acornHelm",
+      "name": "Acorn Helmet",
+      "kind": "armor",
+      "rarity": "uncommon",
+      "stats": {
+        "armorClass": 15
+      },
+      "icon": "🪖"
+    },
+    "shellArmor": {
+      "id": "shellArmor",
+      "name": "Snail-shell Armor",
+      "kind": "armor",
+      "rarity": "rare",
+      "stats": {
+        "armorClass": 17
+      },
+      "icon": "🐚"
+    },
+    "berry": {
+      "id": "berry",
+      "name": "Juicy Berry",
+      "kind": "potion",
+      "rarity": "common",
+      "stats": {
+        "heal": "2d4+4"
+      },
+      "icon": "🫐"
+    },
+    "honeyPot": {
+      "id": "honeyPot",
+      "name": "Honey Pot",
+      "kind": "potion",
+      "rarity": "rare",
+      "stats": {
+        "heal": "4d4+8"
+      },
+      "icon": "🍯"
+    },
+    "button": {
+      "id": "button",
+      "name": "Shiny Button",
+      "kind": "treasure",
+      "rarity": "common",
+      "stats": {
+        "value": 10
+      },
+      "icon": "🔘"
+    },
+    "marble": {
+      "id": "marble",
+      "name": "Glass Marble",
+      "kind": "treasure",
+      "rarity": "rare",
+      "stats": {
+        "value": 100
+      },
+      "icon": "🔮"
+    }
+  },
+  "lootTables": {
+    "common": {
+      "rolls": 1,
+      "nothingWeight": 5,
+      "entries": [
+        {
+          "item": "button",
+          "weight": 3
+        },
+        {
+          "item": "berry",
+          "weight": 2
+        }
+      ]
+    },
+    "uncommon": {
+      "rolls": 1,
+      "nothingWeight": 3,
+      "entries": [
+        {
+          "item": "button",
+          "weight": 4
+        },
+        {
+          "item": "berry",
+          "weight": 3
+        },
+        {
+          "item": "acornSling",
+          "weight": 1
+        },
+        {
+          "item": "leafCloak",
+          "weight": 1
+        },
+        {
+          "item": "acornHelm",
+          "weight": 0.5
+        }
+      ]
+    },
+    "boss": {
+      "rolls": 2,
+      "nothingWeight": 4,
+      "entries": [
+        {
+          "item": "button",
+          "weight": 4
+        },
+        {
+          "item": "berry",
+          "weight": 3
+        },
+        {
+          "item": "honeyPot",
+          "weight": 1
+        },
+        {
+          "item": "pinecone",
+          "weight": 1
+        },
+        {
+          "item": "acornHelm",
+          "weight": 1
+        },
+        {
+          "item": "shellArmor",
+          "weight": 0.4
+        },
+        {
+          "item": "sunflower",
+          "weight": 0.2
+        },
+        {
+          "item": "marble",
+          "weight": 0.5
+        }
+      ]
+    },
+    "floor": {
+      "rolls": 1,
+      "nothingWeight": 1,
+      "entries": [
+        {
+          "item": "berry",
+          "weight": 4
+        },
+        {
+          "item": "button",
+          "weight": 3
+        },
+        {
+          "item": "acornSling",
+          "weight": 1
+        },
+        {
+          "item": "leafCloak",
+          "weight": 1.5
+        },
+        {
+          "item": "acornHelm",
+          "weight": 0.7
+        },
+        {
+          "item": "pinecone",
+          "weight": 0.4
+        },
+        {
+          "item": "marble",
+          "weight": 0.3
+        }
+      ]
+    }
+  }
+}

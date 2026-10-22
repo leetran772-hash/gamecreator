@@ -14,6 +14,12 @@ export function validateBible(b: Bible): string[] {
     if (m.emissive && !(m.emissive in visual.palette))
       problems.push(`visual.materials.${k}: emissive "${m.emissive}" is not in the palette`);
   }
+  for (const key of ["floor", "wall", "loot", "stairs"])
+    if (!(key in visual.materials)) problems.push(`visual.materials: engines need a "${key}" material`);
+  if (visual.scene) {
+    for (const [k, v] of Object.entries(visual.scene))
+      if (!(v in visual.palette)) problems.push(`visual.scene.${k}: "${v}" is not in the palette`);
+  }
   if (!(lore.player.material in visual.materials)) problems.push(`lore.player: unknown material "${lore.player.material}"`);
 
   for (const [id, item] of Object.entries(lore.items)) {

@@ -15,6 +15,8 @@ export interface ConceptRef {
 export interface VisualLayer {
   palette: Record<string, string>;
   materials: Record<string, { color: string; roughness: number; metalness: number; emissive?: string }>;
+  /** Palette keys for the scene background and the player's light. */
+  scene?: { background: string; light: string };
   polyBudgets: { character: number; prop: number; environment: number };
   textureResolution: number;
   styleNotes: string;

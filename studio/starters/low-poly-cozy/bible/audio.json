@@ -1,0 +1,18 @@
+{
+  "voices": {
+    "hero": {
+      "voiceId": "",
+      "notes": "Small, cheerful, curious."
+    },
+    "grandmole": {
+      "voiceId": "",
+      "notes": "Slow, kind, a little deaf."
+    }
+  },
+  "sfxStyle": "Soft and woody: leaf rustles, pops, gentle boinks, tiny squeaks. Nothing harsh.",
+  "musicMoods": {
+    "explore": "Plucky acoustic guitar and glockenspiel, 90 bpm, loopable",
+    "combat": "Bouncy pizzicato strings, 120 bpm, loopable",
+    "victory": "Short ukulele flourish with birdsong"
+  }
+}
