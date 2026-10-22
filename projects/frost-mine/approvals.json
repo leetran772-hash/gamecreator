@@ -2,7 +2,7 @@
   {
     "id": "ap-mvj7ij0v-2dn",
     "createdAt": "2026-10-22T07:15:41.647Z",
-    "status": "approved",
+    "status": "used",
     "estimate": {
       "step": "concept",
       "service": "openai",
@@ -38,5 +38,90 @@
     },
     "summary": "Concept image: Frost Wisp, small ice spirit",
     "decidedAt": "2026-10-22T07:16:41.097Z"
+  },
+  {
+    "id": "ap-mvj7lcgr-4zt",
+    "createdAt": "2026-10-22T07:17:53.115Z",
+    "status": "pending",
+    "estimate": {
+      "step": "image-to-3d",
+      "service": "meshy",
+      "credits": 30,
+      "usd": 0.6,
+      "detail": "Meshy image-to-3D with textures"
+    },
+    "action": {
+      "tool": "make_3d",
+      "args": {
+        "id": "frost-wisp-small-ice-spirit"
+      }
+    },
+    "summary": "Meshy 3D model: Frost Wisp, small ice spirit"
+  },
+  {
+    "id": "ap-mvj7ldd7-5xw",
+    "createdAt": "2026-10-22T07:17:54.283Z",
+    "status": "pending",
+    "estimate": {
+      "step": "sfx",
+      "service": "elevenlabs",
+      "usd": 0.12,
+      "detail": "1 ElevenLabs sound effect (eleven_text_to_sound_v2)"
+    },
+    "action": {
+      "tool": "generate_sfx",
+      "args": {
+        "description": "Crunchy pickaxe striking ice, short sharp impact with icy tinkle and cavern reverb",
+        "tags": [
+          "sfx:hit"
+        ],
+        "durationSeconds": 1
+      }
+    },
+    "summary": "Sound effect: Crunchy pickaxe striking ice, short sharp impact with icy tinkle and cavern reverb"
+  },
+  {
+    "id": "ap-mvj7le9s-67g",
+    "createdAt": "2026-10-22T07:17:55.456Z",
+    "status": "pending",
+    "estimate": {
+      "step": "sfx",
+      "service": "elevenlabs",
+      "usd": 0.12,
+      "detail": "1 ElevenLabs sound effect (eleven_text_to_sound_v2)"
+    },
+    "action": {
+      "tool": "generate_sfx",
+      "args": {
+        "description": "Warm item pickup: soft copper clink with a gentle lantern-flame crackle and bright chime",
+        "tags": [
+          "sfx:pickup"
+        ],
+        "durationSeconds": 1
+      }
+    },
+    "summary": "Sound effect: Warm item pickup: soft copper clink with a gentle lantern-flame crackle and bright chime"
+  },
+  {
+    "id": "ap-mvj7lede-4u3",
+    "createdAt": "2026-10-22T07:17:55.586Z",
+    "status": "pending",
+    "estimate": {
+      "step": "music",
+      "service": "elevenlabs",
+      "usd": 0.5,
+      "detail": "ElevenLabs music track, 60s (music_v1)"
+    },
+    "action": {
+      "tool": "generate_music",
+      "args": {
+        "mood": "explore",
+        "seconds": 60,
+        "tags": [
+          "music:explore"
+        ]
+      }
+    },
+    "summary": "Music: explore (60s)"
   }
 ]

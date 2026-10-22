@@ -20,6 +20,27 @@
       ],
       "concept": "assets/concepts/frost-wisp-small-ice-spirit.png",
       "conceptPrompt": "Concept art of Frost Wisp, small ice spirit for a 3D game asset.\nGame style: cozy-spooky storybook, chunky low-poly, cold blue frost lit by warm amber lantern glow. Chunky, rounded low-poly with a storybook feel. The world is cold blues (frosted stone, ice crystals, blue spirit glow); everything warm and friendly is amber (lantern, loot, Brann, stair shafts down). Soft frost rim-light, lantern pool of warm light around the player, darkness beyond. Spooky but never gory: spirits are glowing, translucent and a little cute.\nUse only colors close to this palette: night #070b14, deepIce #13243a, stone #3a4352, frost #7fc8f0, rime #d8eefa, amber #ffb347, ember #e86a2c, wood #7a4e2d, spirit #4fe0ff, copper #c9783f.\nSimple shapes that read well as a low-poly 3D model.\nFull body, standing, limbs clearly separated from the body, nothing overlapping the silhouette.\nSingle object, centered, on a plain neutral light-grey background.\nFront or three-quarter view, orthographic feel: no perspective distortion, nothing cropped at the edges.\nEven, soft studio lighting with no heavy or cast shadows (they would get baked into the textures).\nNo text, labels, frames, watermarks or extra objects."
+    },
+    {
+      "id": "brann-dwarven-miner-with-lantern",
+      "subject": "Brann, dwarven miner with lantern",
+      "kind": "character",
+      "description": "",
+      "status": "concept",
+      "source": "generated",
+      "locked": false,
+      "tags": [],
+      "bibleVersion": 7,
+      "costs": [
+        {
+          "service": "openai",
+          "step": "concept (dry run)",
+          "usd": 0,
+          "at": "2026-10-22T07:17:52.538Z"
+        }
+      ],
+      "concept": "assets/concepts/brann-dwarven-miner-with-lantern.png",
+      "conceptPrompt": "Concept art of Brann, dwarven miner with lantern for a 3D game asset.\nGame style: cozy-spooky storybook, chunky low-poly, cold blue frost lit by warm amber lantern glow. Chunky, rounded low-poly with a storybook feel. The world is cold blues (frosted stone, ice crystals, blue spirit glow); everything warm and friendly is amber (lantern, loot, Brann, stair shafts down). Soft frost rim-light, lantern pool of warm light around the player, darkness beyond. Spooky but never gory: spirits are glowing, translucent and a little cute.\nUse only colors close to this palette: night #070b14, deepIce #13243a, stone #3a4352, frost #7fc8f0, rime #d8eefa, amber #ffb347, ember #e86a2c, wood #7a4e2d, spirit #4fe0ff, copper #c9783f.\nSimple shapes that read well as a low-poly 3D model.\nFull body, standing in a neutral A-pose, arms slightly away from the body, no props overlapping the body.\nSingle object, centered, on a plain neutral light-grey background.\nFront or three-quarter view, orthographic feel: no perspective distortion, nothing cropped at the edges.\nEven, soft studio lighting with no heavy or cast shadows (they would get baked into the textures).\nNo text, labels, frames, watermarks or extra objects."
     }
   ]
 }
