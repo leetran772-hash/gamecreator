@@ -42,7 +42,7 @@
   {
     "id": "ap-mvj7lcgr-4zt",
     "createdAt": "2026-10-22T07:17:53.115Z",
-    "status": "pending",
+    "status": "used",
     "estimate": {
       "step": "image-to-3d",
       "service": "meshy",
@@ -56,12 +56,13 @@
         "id": "frost-wisp-small-ice-spirit"
       }
     },
-    "summary": "Meshy 3D model: Frost Wisp, small ice spirit"
+    "summary": "Meshy 3D model: Frost Wisp, small ice spirit",
+    "decidedAt": "2026-10-22T07:18:09.455Z"
   },
   {
     "id": "ap-mvj7ldd7-5xw",
     "createdAt": "2026-10-22T07:17:54.283Z",
-    "status": "pending",
+    "status": "approved",
     "estimate": {
       "step": "sfx",
       "service": "elevenlabs",
@@ -78,12 +79,13 @@
         "durationSeconds": 1
       }
     },
-    "summary": "Sound effect: Crunchy pickaxe striking ice, short sharp impact with icy tinkle and cavern reverb"
+    "summary": "Sound effect: Crunchy pickaxe striking ice, short sharp impact with icy tinkle and cavern reverb",
+    "decidedAt": "2026-10-22T07:18:09.472Z"
   },
   {
     "id": "ap-mvj7le9s-67g",
     "createdAt": "2026-10-22T07:17:55.456Z",
-    "status": "pending",
+    "status": "approved",
     "estimate": {
       "step": "sfx",
       "service": "elevenlabs",
@@ -100,12 +102,13 @@
         "durationSeconds": 1
       }
     },
-    "summary": "Sound effect: Warm item pickup: soft copper clink with a gentle lantern-flame crackle and bright chime"
+    "summary": "Sound effect: Warm item pickup: soft copper clink with a gentle lantern-flame crackle and bright chime",
+    "decidedAt": "2026-10-22T07:18:09.485Z"
   },
   {
     "id": "ap-mvj7lede-4u3",
     "createdAt": "2026-10-22T07:17:55.586Z",
-    "status": "pending",
+    "status": "approved",
     "estimate": {
       "step": "music",
       "service": "elevenlabs",
@@ -122,6 +125,7 @@
         ]
       }
     },
-    "summary": "Music: explore (60s)"
+    "summary": "Music: explore (60s)",
+    "decidedAt": "2026-10-22T07:18:09.498Z"
   }
 ]

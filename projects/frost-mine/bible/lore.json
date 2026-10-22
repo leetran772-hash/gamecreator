@@ -53,7 +53,8 @@
       "minFloor": 1,
       "spawnWeight": 5,
       "sightRange": 6,
-      "lootTable": "wisp"
+      "lootTable": "wisp",
+      "model": "assets/models/frost-wisp-small-ice-spirit.glb"
     },
     "icebat": {
       "id": "icebat",

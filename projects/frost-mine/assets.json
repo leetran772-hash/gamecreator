@@ -5,7 +5,7 @@
       "subject": "Frost Wisp, small ice spirit",
       "kind": "creature",
       "description": "",
-      "status": "approved",
+      "status": "cleaned",
       "source": "generated",
       "locked": false,
       "tags": [],
@@ -16,10 +16,28 @@
           "step": "concept (dry run)",
           "usd": 0,
           "at": "2026-10-22T07:16:44.574Z"
+        },
+        {
+          "service": "meshy",
+          "step": "image-to-3d (dry run)",
+          "usd": 0,
+          "at": "2026-10-22T07:18:13.051Z"
         }
       ],
       "concept": "assets/concepts/frost-wisp-small-ice-spirit.png",
-      "conceptPrompt": "Concept art of Frost Wisp, small ice spirit for a 3D game asset.\nGame style: cozy-spooky storybook, chunky low-poly, cold blue frost lit by warm amber lantern glow. Chunky, rounded low-poly with a storybook feel. The world is cold blues (frosted stone, ice crystals, blue spirit glow); everything warm and friendly is amber (lantern, loot, Brann, stair shafts down). Soft frost rim-light, lantern pool of warm light around the player, darkness beyond. Spooky but never gory: spirits are glowing, translucent and a little cute.\nUse only colors close to this palette: night #070b14, deepIce #13243a, stone #3a4352, frost #7fc8f0, rime #d8eefa, amber #ffb347, ember #e86a2c, wood #7a4e2d, spirit #4fe0ff, copper #c9783f.\nSimple shapes that read well as a low-poly 3D model.\nFull body, standing, limbs clearly separated from the body, nothing overlapping the silhouette.\nSingle object, centered, on a plain neutral light-grey background.\nFront or three-quarter view, orthographic feel: no perspective distortion, nothing cropped at the edges.\nEven, soft studio lighting with no heavy or cast shadows (they would get baked into the textures).\nNo text, labels, frames, watermarks or extra objects."
+      "conceptPrompt": "Concept art of Frost Wisp, small ice spirit for a 3D game asset.\nGame style: cozy-spooky storybook, chunky low-poly, cold blue frost lit by warm amber lantern glow. Chunky, rounded low-poly with a storybook feel. The world is cold blues (frosted stone, ice crystals, blue spirit glow); everything warm and friendly is amber (lantern, loot, Brann, stair shafts down). Soft frost rim-light, lantern pool of warm light around the player, darkness beyond. Spooky but never gory: spirits are glowing, translucent and a little cute.\nUse only colors close to this palette: night #070b14, deepIce #13243a, stone #3a4352, frost #7fc8f0, rime #d8eefa, amber #ffb347, ember #e86a2c, wood #7a4e2d, spirit #4fe0ff, copper #c9783f.\nSimple shapes that read well as a low-poly 3D model.\nFull body, standing, limbs clearly separated from the body, nothing overlapping the silhouette.\nSingle object, centered, on a plain neutral light-grey background.\nFront or three-quarter view, orthographic feel: no perspective distortion, nothing cropped at the edges.\nEven, soft studio lighting with no heavy or cast shadows (they would get baked into the textures).\nNo text, labels, frames, watermarks or extra objects.",
+      "rawModel": "assets/models/raw/frost-wisp-small-ice-spirit.glb",
+      "stats": {
+        "triangles": 12,
+        "lods": [
+          12,
+          6,
+          1
+        ],
+        "height": 1.2,
+        "snapped": {}
+      },
+      "model": "assets/models/frost-wisp-small-ice-spirit.glb"
     },
     {
       "id": "brann-dwarven-miner-with-lantern",
