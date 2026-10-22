@@ -1,0 +1,34 @@
+{
+  "id": "inventory",
+  "name": "Inventory",
+  "category": "Systems and mechanics",
+  "whatItIs": "Capacity-limited pack with weapon and armor equip slots. Receives itemPickedUp, emits inventoryChanged.",
+  "genres": [
+    "RPG",
+    "roguelike",
+    "survival"
+  ],
+  "bibleInputs": [
+    "lore.items (shared item schema)"
+  ],
+  "outputs": [
+    "inventoryChanged events"
+  ],
+  "implementations": {
+    "threejs": "src/core/inventory.ts",
+    "godot": null
+  },
+  "dependencies": {
+    "hard": [
+      "item-schema"
+    ],
+    "events": [
+      "loot-roller:lootDropped",
+      "itemPickedUp"
+    ]
+  },
+  "status": "prototype",
+  "gotchas": [
+    "Treasure converts to gold on pickup and never takes a slot."
+  ]
+}

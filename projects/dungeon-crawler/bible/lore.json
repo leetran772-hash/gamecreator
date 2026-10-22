@@ -1,0 +1,78 @@
+{
+  "tone": "Grim but not hopeless. Short, dry text. Death is common and quick.",
+  "rules": [
+    "Turn-based: every action is one turn; enemies act after the player.",
+    "Attack: d20 + attack bonus vs armor class. Natural 20 crits (double dice), natural 1 misses.",
+    "Descend on the stairs; leaving floor 5 wins the run."
+  ],
+  "factions": [
+    { "id": "restless", "name": "The Restless", "description": "The cathedral's dead, stirred by the cult below." },
+    { "id": "ember-cult", "name": "Cult of the Last Ember", "description": "Zealots trying to relight a dead god's flame." }
+  ],
+  "characters": [
+    { "id": "hero", "name": "The Delver", "role": "player", "description": "A grave-robber who came for gold and stayed for revenge." },
+    { "id": "warden", "name": "The Warden", "role": "guide", "description": "A ghost who remembers every way out." }
+  ],
+  "player": { "name": "Delver", "hp": 24, "ac": 12, "attackBonus": 3, "damage": "1d4+1", "material": "hero" },
+  "bestiary": {
+    "rat": {
+      "id": "rat", "name": "Crypt Rat", "description": "Fat, bald and bold.", "material": "boneMat",
+      "hp": 4, "ac": 10, "attackBonus": 2, "damage": "1d3", "xp": 10, "minFloor": 1, "spawnWeight": 5, "sightRange": 6, "lootTable": "vermin"
+    },
+    "skeleton": {
+      "id": "skeleton", "name": "Restless Bones", "description": "A skeleton still wearing its burial rags.", "material": "boneMat",
+      "hp": 9, "ac": 12, "attackBonus": 3, "damage": "1d6", "xp": 25, "minFloor": 1, "spawnWeight": 4, "sightRange": 7, "lootTable": "undead"
+    },
+    "slime": {
+      "id": "slime", "name": "Grave Slime", "description": "Slow, sticky and surprisingly hungry.", "material": "slime",
+      "hp": 14, "ac": 9, "attackBonus": 3, "damage": "1d6+1", "xp": 30, "minFloor": 2, "spawnWeight": 3, "sightRange": 4, "lootTable": "undead"
+    },
+    "cultist": {
+      "id": "cultist", "name": "Ember Cultist", "description": "Hooded, armed and devout.", "material": "cultist",
+      "hp": 16, "ac": 13, "attackBonus": 4, "damage": "1d8+1", "xp": 50, "minFloor": 3, "spawnWeight": 3, "sightRange": 8, "lootTable": "cult"
+    },
+    "wraith": {
+      "id": "wraith", "name": "Choir Wraith", "description": "A singing shadow that drinks warmth.", "material": "wraith",
+      "hp": 22, "ac": 14, "attackBonus": 5, "damage": "2d6", "xp": 90, "minFloor": 4, "spawnWeight": 2, "sightRange": 9, "lootTable": "cult"
+    }
+  },
+  "items": {
+    "dagger": { "id": "dagger", "name": "Rusty Dagger", "kind": "weapon", "rarity": "common", "stats": { "attackBonus": 0, "damage": "1d4+1" }, "icon": "🗡️" },
+    "shortsword": { "id": "shortsword", "name": "Shortsword", "kind": "weapon", "rarity": "uncommon", "stats": { "attackBonus": 1, "damage": "1d6+1" }, "icon": "⚔️" },
+    "warhammer": { "id": "warhammer", "name": "Chapel Warhammer", "kind": "weapon", "rarity": "rare", "stats": { "attackBonus": 1, "damage": "1d10+2" }, "icon": "🔨" },
+    "emberblade": { "id": "emberblade", "name": "Emberblade", "kind": "weapon", "rarity": "epic", "stats": { "attackBonus": 2, "damage": "2d6+2" }, "icon": "🔥" },
+    "leather": { "id": "leather", "name": "Leather Jerkin", "kind": "armor", "rarity": "common", "stats": { "armorClass": 13 }, "icon": "🦺" },
+    "chainmail": { "id": "chainmail", "name": "Chain Shirt", "kind": "armor", "rarity": "uncommon", "stats": { "armorClass": 15 }, "icon": "⛓️" },
+    "plate": { "id": "plate", "name": "Templar Plate", "kind": "armor", "rarity": "rare", "stats": { "armorClass": 17 }, "icon": "🛡️" },
+    "potion": { "id": "potion", "name": "Healing Draught", "kind": "potion", "rarity": "common", "stats": { "heal": "2d4+4" }, "icon": "🧪" },
+    "greaterPotion": { "id": "greaterPotion", "name": "Saint's Tears", "kind": "potion", "rarity": "rare", "stats": { "heal": "4d4+8" }, "icon": "💧" },
+    "coins": { "id": "coins", "name": "Grave Coins", "kind": "treasure", "rarity": "common", "stats": { "value": 10 }, "icon": "🪙" },
+    "relic": { "id": "relic", "name": "Gilded Reliquary", "kind": "treasure", "rarity": "rare", "stats": { "value": 100 }, "icon": "🏺" }
+  },
+  "lootTables": {
+    "vermin": { "rolls": 1, "nothingWeight": 6, "entries": [{ "item": "coins", "weight": 3 }, { "item": "potion", "weight": 1 }] },
+    "undead": {
+      "rolls": 1, "nothingWeight": 3,
+      "entries": [
+        { "item": "coins", "weight": 4 }, { "item": "potion", "weight": 3 }, { "item": "shortsword", "weight": 1 },
+        { "item": "leather", "weight": 1 }, { "item": "chainmail", "weight": 0.5 }
+      ]
+    },
+    "cult": {
+      "rolls": 2, "nothingWeight": 4,
+      "entries": [
+        { "item": "coins", "weight": 4 }, { "item": "potion", "weight": 3 }, { "item": "greaterPotion", "weight": 1 },
+        { "item": "warhammer", "weight": 1 }, { "item": "chainmail", "weight": 1 }, { "item": "plate", "weight": 0.4 },
+        { "item": "emberblade", "weight": 0.2 }, { "item": "relic", "weight": 0.5 }
+      ]
+    },
+    "floor": {
+      "rolls": 1, "nothingWeight": 1,
+      "entries": [
+        { "item": "potion", "weight": 4 }, { "item": "coins", "weight": 3 }, { "item": "shortsword", "weight": 1 },
+        { "item": "leather", "weight": 1.5 }, { "item": "chainmail", "weight": 0.7 }, { "item": "warhammer", "weight": 0.4 },
+        { "item": "relic", "weight": 0.3 }
+      ]
+    }
+  }
+}

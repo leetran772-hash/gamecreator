@@ -1,0 +1,12 @@
+{
+  "voices": {
+    "hero": { "voiceId": "", "notes": "Weary, low, few words. Fill with an ElevenLabs voice ID at approval." },
+    "warden": { "voiceId": "", "notes": "Old, echoing, speaks in riddles." }
+  },
+  "sfxStyle": "Dry, close-miked, stone reverb. Bone clatter, wet slime, cloth rustle. No sci-fi sweeteners.",
+  "musicMoods": {
+    "explore": "Sparse low drone with distant choir, 60 bpm, loopable",
+    "combat": "Taiko and low strings, 110 bpm, loopable",
+    "victory": "Short brass swell with bells"
+  }
+}

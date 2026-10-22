@@ -1,0 +1,61 @@
+{
+  "_note": "Claude reads this index while planning, then opens entries/<id>.json for the ones it picks.",
+  "entries": [
+    {
+      "id": "seeder",
+      "name": "Seeder",
+      "category": "World and generation",
+      "status": "stable",
+      "summary": "Deterministic random numbers with named sub-streams."
+    },
+    {
+      "id": "level-design",
+      "name": "Level design",
+      "category": "World and generation",
+      "status": "prototype",
+      "summary": "Seeded room-and-corridor dungeons with start and stairs placement (stairs in the room farthest by walking distance)."
+    },
+    {
+      "id": "dnd-combat",
+      "name": "D&D combat system",
+      "category": "Systems and mechanics",
+      "status": "prototype",
+      "summary": "d20 + attack bonus vs armor class; natural 20 crits (double dice), natural 1 misses."
+    },
+    {
+      "id": "loot-roller",
+      "name": "Loot roller",
+      "category": "Systems and mechanics",
+      "status": "prototype",
+      "summary": "Weighted loot tables with a 'nothing' weight."
+    },
+    {
+      "id": "inventory",
+      "name": "Inventory",
+      "category": "Systems and mechanics",
+      "status": "prototype",
+      "summary": "Capacity-limited pack with weapon and armor equip slots."
+    },
+    {
+      "id": "concept-to-3d",
+      "name": "Concept art -> 3D pipeline",
+      "category": "Asset pipelines",
+      "status": "prototype",
+      "summary": "GPT asset concept (Meshy-friendly template, approved concepts as style references) -> user approval -> Meshy image-to-3D using that exact image -> Blender headless cleanup (scale, pivot, decimate to poly budget, palette snap, LODs, GLB)."
+    },
+    {
+      "id": "gba-animation",
+      "name": "GBA-style basic animation",
+      "category": "Presentation",
+      "status": "prototype",
+      "summary": "Few-frame, snappy procedural animation (bob, squash, hit flash) for low-poly characters."
+    },
+    {
+      "id": "ui-hud",
+      "name": "UI/HUD kit",
+      "category": "Presentation",
+      "status": "prototype",
+      "summary": "HP bar, stats line, inventory panel, combat log, game-over screen and touch pad, driven only by events."
+    }
+  ]
+}

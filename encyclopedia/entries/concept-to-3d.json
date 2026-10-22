@@ -1,0 +1,38 @@
+{
+  "id": "concept-to-3d",
+  "name": "Concept art -> 3D pipeline",
+  "category": "Asset pipelines",
+  "whatItIs": "GPT asset concept (Meshy-friendly template, approved concepts as style references) -> user approval -> Meshy image-to-3D using that exact image -> Blender headless cleanup (scale, pivot, decimate to poly budget, palette snap, LODs, GLB).",
+  "genres": [
+    "any 3D game"
+  ],
+  "bibleInputs": [
+    "visual.palette",
+    "visual.styleNotes",
+    "visual.polyBudgets",
+    "visual.concepts",
+    "meta.style"
+  ],
+  "outputs": [
+    "assets/concepts/<id>.png",
+    "assets/models/<id>.glb + LODs",
+    "assets.json records"
+  ],
+  "implementations": {
+    "threejs": "src/pipeline/assetPipeline.ts",
+    "godot": "same GLB output; engine-independent"
+  },
+  "dependencies": {
+    "hard": [
+      "openai",
+      "meshy",
+      "blender"
+    ],
+    "events": []
+  },
+  "status": "prototype",
+  "gotchas": [
+    "Live API calls not yet exercised end to end; dry runs and mocked requests are tested.",
+    "Non-humanoid rigging is a known weak spot."
+  ]
+}

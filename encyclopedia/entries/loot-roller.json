@@ -1,0 +1,35 @@
+{
+  "id": "loot-roller",
+  "name": "Loot roller",
+  "category": "Systems and mechanics",
+  "whatItIs": "Weighted loot tables with a 'nothing' weight. Listens for enemyDefeated and drops items on the ground.",
+  "genres": [
+    "RPG",
+    "roguelike",
+    "looter"
+  ],
+  "bibleInputs": [
+    "lore.lootTables",
+    "lore.items"
+  ],
+  "outputs": [
+    "lootDropped events",
+    "ground items"
+  ],
+  "implementations": {
+    "threejs": "src/core/loot.ts",
+    "godot": null
+  },
+  "dependencies": {
+    "hard": [
+      "seeder"
+    ],
+    "events": [
+      "dnd-combat:enemyDefeated"
+    ]
+  },
+  "status": "prototype",
+  "gotchas": [
+    "Each drop uses stream loot:<enemyUid> so other spawns never change it."
+  ]
+}

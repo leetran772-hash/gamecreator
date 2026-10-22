@@ -1,0 +1,30 @@
+{
+  "id": "ui-hud",
+  "name": "UI/HUD kit",
+  "category": "Presentation",
+  "whatItIs": "HP bar, stats line, inventory panel, combat log, game-over screen and touch pad, driven only by events.",
+  "genres": [
+    "any"
+  ],
+  "bibleInputs": [
+    "meta.title"
+  ],
+  "outputs": [
+    "HUD DOM"
+  ],
+  "implementations": {
+    "threejs": "src/engines/three/hud.ts",
+    "godot": null
+  },
+  "dependencies": {
+    "hard": [],
+    "events": [
+      "inventory:inventoryChanged",
+      "dnd-combat:attack",
+      "playerHealthChanged",
+      "gameOver"
+    ]
+  },
+  "status": "prototype",
+  "gotchas": []
+}

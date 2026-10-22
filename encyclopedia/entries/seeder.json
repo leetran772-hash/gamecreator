@@ -1,0 +1,29 @@
+{
+  "id": "seeder",
+  "name": "Seeder",
+  "category": "World and generation",
+  "whatItIs": "Deterministic random numbers with named sub-streams. Each consumer (loot, level layout, combat rolls) forks its own stream from the main seed, so adding an enemy never shifts later loot drops and saved runs stay reproducible.",
+  "genres": [
+    "roguelike",
+    "dungeon crawler",
+    "any procedural game"
+  ],
+  "bibleInputs": [],
+  "outputs": [
+    "Rng streams",
+    "dice rolls (NdM+K)"
+  ],
+  "implementations": {
+    "threejs": "src/core/seeder.ts",
+    "godot": null
+  },
+  "dependencies": {
+    "hard": [],
+    "events": []
+  },
+  "status": "stable",
+  "gotchas": [
+    "Never share one stream between two consumers; fork by name.",
+    "Key per-entity streams by a stable uid (e.g. loot:<enemyUid>), not by spawn order."
+  ]
+}

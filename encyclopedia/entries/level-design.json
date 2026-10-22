@@ -1,0 +1,33 @@
+{
+  "id": "level-design",
+  "name": "Level design",
+  "category": "World and generation",
+  "whatItIs": "Seeded room-and-corridor dungeons with start and stairs placement (stairs in the room farthest by walking distance).",
+  "genres": [
+    "roguelike",
+    "dungeon crawler"
+  ],
+  "bibleInputs": [
+    "game.json level options"
+  ],
+  "outputs": [
+    "Level grid",
+    "rooms",
+    "start",
+    "stairs"
+  ],
+  "implementations": {
+    "threejs": "src/core/level.ts",
+    "godot": null
+  },
+  "dependencies": {
+    "hard": [
+      "seeder"
+    ],
+    "events": []
+  },
+  "status": "prototype",
+  "gotchas": [
+    "Small maps can fail to place minRooms; the generator throws instead of returning a broken level."
+  ]
+}

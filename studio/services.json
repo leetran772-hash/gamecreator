@@ -1,0 +1,22 @@
+{
+  "_note": "Endpoints, models and prices for external tools. Prices are estimates for approval gates only; check each provider's pricing page and update lastChecked.",
+  "lastChecked": "2026-10-22",
+  "openai": {
+    "baseUrl": "https://api.openai.com/v1",
+    "imageModel": "gpt-image-2",
+    "size": "1024x1024",
+    "quality": "medium",
+    "estimatedUsdPerImage": 0.07
+  },
+  "meshy": {
+    "baseUrl": "https://api.meshy.ai/openapi/v1",
+    "aiModel": "latest",
+    "topology": "triangle",
+    "shouldTexture": true,
+    "enablePbr": true,
+    "pollSeconds": 10,
+    "timeoutMinutes": 20,
+    "estimatedCreditsPerModel": 30,
+    "estimatedUsdPerCredit": 0.02
+  }
+}

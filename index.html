@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Preview</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/engines/three/hud.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="hud">
+      <div id="top">
+        <div id="title"></div>
+        <div id="stats"></div>
+        <div id="hpbar"><div id="hpfill"></div><span id="hptext"></span></div>
+      </div>
+      <div id="inventory"></div>
+      <div id="log"></div>
+      <div id="help">WASD / arrows move &amp; attack · Space wait · Enter descend · 1–9 use item</div>
+      <div id="pad">
+        <button data-k="up">▲</button><button data-k="left">◀</button><button data-k="wait">•</button><button data-k="right">▶</button><button data-k="down">▼</button><button data-k="descend">⤓</button>
+      </div>
+      <div id="overlay" hidden><div><h1 id="overlay-title"></h1><p id="overlay-text"></p><button id="restart">New run</button></div></div>
+    </div>
+    <script type="module" src="/src/engines/three/main.ts"></script>
+  </body>
+</html>

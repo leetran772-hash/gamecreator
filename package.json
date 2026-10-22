@@ -1,0 +1,29 @@
+{
+  "name": "gamecreator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-directed 3D game creator studio: engine-neutral core, encyclopedia modules and a Three.js preview.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "qa": "tsx scripts/qa.ts",
+    "check": "npm run typecheck && npm test && npm run qa",
+    "asset": "tsx scripts/asset.ts",
+    "qa:visual": "tsx scripts/visual.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/three": "^0.186.0",
+    "playwright-core": "^1.64.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  }
+}

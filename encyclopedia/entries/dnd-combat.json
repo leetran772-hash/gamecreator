@@ -1,0 +1,34 @@
+{
+  "id": "dnd-combat",
+  "name": "D&D combat system",
+  "category": "Systems and mechanics",
+  "whatItIs": "d20 + attack bonus vs armor class; natural 20 crits (double dice), natural 1 misses. Emits attack and enemyDefeated.",
+  "genres": [
+    "RPG",
+    "roguelike",
+    "tactics"
+  ],
+  "bibleInputs": [
+    "lore.player",
+    "lore.bestiary stat blocks",
+    "lore.items weapon/armor stats"
+  ],
+  "outputs": [
+    "attack events",
+    "enemyDefeated events"
+  ],
+  "implementations": {
+    "threejs": "src/core/combat.ts",
+    "godot": null
+  },
+  "dependencies": {
+    "hard": [
+      "seeder"
+    ],
+    "events": []
+  },
+  "status": "prototype",
+  "gotchas": [
+    "Balance sim (npm run qa) flags floor-1 enemies that beat a fresh player too often."
+  ]
+}
