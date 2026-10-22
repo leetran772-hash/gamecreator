@@ -24,6 +24,8 @@
     "vitest": "^5.0.5"
   },
   "dependencies": {
-    "three": "^0.186.1"
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "three": "^0.186.1",
+    "zod": "^4.6.7"
   }
 }
