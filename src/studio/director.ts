@@ -61,13 +61,30 @@ export class Director {
     return join(this.dir, ".studio", name);
   }
 
-  get sessionId(): string | undefined {
+  private session(): { sessionId?: string; costSoFar?: number } {
     const f = this.file("session.json");
-    return existsSync(f) ? (JSON.parse(readFileSync(f, "utf8")) as { sessionId?: string }).sessionId : undefined;
+    return existsSync(f) ? (JSON.parse(readFileSync(f, "utf8")) as { sessionId?: string; costSoFar?: number }) : {};
+  }
+
+  get sessionId(): string | undefined {
+    return this.session().sessionId;
   }
 
   private set sessionId(id: string | undefined) {
-    writeFileSync(this.file("session.json"), JSON.stringify({ sessionId: id }) + "\n");
+    const cur = this.session();
+    writeFileSync(this.file("session.json"), JSON.stringify({ sessionId: id, costSoFar: cur.sessionId === id ? cur.costSoFar ?? 0 : 0 }) + "\n");
+  }
+
+  /**
+   * Claude Code reports the session's running total, which carries over on
+   * --resume. Returns this turn's share and remembers the new total.
+   */
+  private turnCost(sessionTotal: number): number {
+    const cur = this.session();
+    const before = cur.costSoFar ?? 0;
+    const turn = sessionTotal >= before ? sessionTotal - before : sessionTotal;
+    writeFileSync(this.file("session.json"), JSON.stringify({ ...cur, costSoFar: sessionTotal }) + "\n");
+    return turn;
   }
 
   history(): ChatEntry[] {
@@ -159,7 +176,7 @@ export class Director {
       } catch {
         return;
       }
-      if (ev.type === "system" && ev.subtype === "init" && ev.session_id) this.sessionId = ev.session_id;
+      if (ev.type === "system" && ev.subtype === "init" && ev.session_id && ev.session_id !== this.sessionId) this.sessionId = ev.session_id;
       if (ev.type === "stream_event" && ev.event?.type === "content_block_delta" && ev.event.delta?.type === "text_delta" && !ev.parent_tool_use_id)
         this.emit({ type: "delta", text: ev.event.delta.text });
       if (ev.type === "assistant" && !ev.parent_tool_use_id) {
@@ -185,8 +202,8 @@ export class Director {
         }
       }
       if (ev.type === "result") {
-        costUsd = Number(ev.total_cost_usd ?? 0);
-        if (ev.session_id) this.sessionId = ev.session_id;
+        if (ev.session_id && ev.session_id !== this.sessionId) this.sessionId = ev.session_id;
+        costUsd = this.turnCost(Number(ev.total_cost_usd ?? 0));
         if (ev.is_error && ev.result) this.emit({ type: "error", text: String(ev.result) });
       }
     };

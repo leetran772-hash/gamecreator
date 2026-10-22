@@ -1,3 +1,4 @@
+import { deflateSync } from "node:zlib";
 // Writes a tiny valid GLB box. Used by dry runs so the rest of the pipeline
 // (Blender cleanup, engine loading) can be exercised without API spend.
 export interface BoxOptions {
@@ -60,7 +61,71 @@ export function boxGlb(w = 1, h = 1.8, d = 0.6, opts: BoxOptions = {}): Uint8Arr
   return out;
 }
 
-/** 1x1 grey PNG for dry-run concepts. */
-export const PLACEHOLDER_PNG = Uint8Array.from(
-  Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN4+P//fwAJIAPfaxNz2QAAAABJRU5ErkJggg==", "base64"),
-);
+/**
+ * A visible placeholder image for dry runs: a soft rounded silhouette on a
+ * neutral background, tinted by `seed` so different subjects look different.
+ */
+export function placeholderPng(seed = "placeholder", size = 256): Uint8Array {
+  let hsh = 2166136261;
+  for (let i = 0; i < seed.length; i++) hsh = Math.imul(hsh ^ seed.charCodeAt(i), 16777619) >>> 0;
+  const hue = (hsh % 360) / 360;
+  const [r, g, b] = hslToRgb(hue, 0.45, 0.55);
+  const raw = Buffer.alloc((size * 3 + 1) * size);
+  for (let y = 0; y < size; y++) {
+    raw[y * (size * 3 + 1)] = 0; // filter: none
+    for (let x = 0; x < size; x++) {
+      const u = (x - size / 2) / (size * 0.28);
+      const v = (y - size * 0.55) / (size * 0.36);
+      const head = Math.hypot((x - size / 2) / (size * 0.14), (y - size * 0.26) / (size * 0.14));
+      const inside = u * u + v * v < 1 || head < 1;
+      const o = y * (size * 3 + 1) + 1 + x * 3;
+      const bg = 0xd8 - Math.floor((y / size) * 24);
+      raw[o] = inside ? r : bg;
+      raw[o + 1] = inside ? g : bg;
+      raw[o + 2] = inside ? b : bg;
+    }
+  }
+  const chunk = (type: string, data: Buffer) => {
+    const len = Buffer.alloc(4);
+    len.writeUInt32BE(data.length);
+    const td = Buffer.concat([Buffer.from(type, "ascii"), data]);
+    const crc = Buffer.alloc(4);
+    crc.writeUInt32BE(crc32(td));
+    return Buffer.concat([len, td, crc]);
+  };
+  const ihdr = Buffer.alloc(13);
+  ihdr.writeUInt32BE(size, 0);
+  ihdr.writeUInt32BE(size, 4);
+  ihdr[8] = 8; // bit depth
+  ihdr[9] = 2; // RGB
+  return new Uint8Array(
+    Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), chunk("IHDR", ihdr), chunk("IDAT", deflateSync(raw)), chunk("IEND", Buffer.alloc(0))]),
+  );
+}
+
+function hslToRgb(h: number, s: number, l: number): [number, number, number] {
+  const f = (n: number) => {
+    const k = (n + h * 12) % 12;
+    const a = s * Math.min(l, 1 - l);
+    return Math.round((l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1))) * 255);
+  };
+  return [f(0), f(8), f(4)];
+}
+
+let CRC_TABLE: Uint32Array | undefined;
+function crc32(buf: Buffer): number {
+  if (!CRC_TABLE) {
+    CRC_TABLE = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      CRC_TABLE[n] = c >>> 0;
+    }
+  }
+  let c = 0xffffffff;
+  for (const byte of buf) c = CRC_TABLE[(c ^ byte) & 0xff]! ^ (c >>> 8);
+  return (c ^ 0xffffffff) >>> 0;
+}
+
+/** Placeholder image for dry-run concepts and tests. */
+export const PLACEHOLDER_PNG = placeholderPng();

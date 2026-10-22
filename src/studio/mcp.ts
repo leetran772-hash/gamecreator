@@ -118,9 +118,9 @@ export function buildServer(dir: string, dryRun = process.env.STUDIO_DRY_RUN ===
       description:
         "Generate a GPT asset concept image (Meshy-friendly template + bible style + approved concepts as references). Reused subjects hit the cache. Paid: needs user approval. The user then approves the look in the studio before it can go to 3D.",
       inputSchema: {
-        subject: z.string(),
+        subject: z.string().describe('Short name, 1-4 words (e.g. "frost wisp"). It becomes the asset id and the cache key.'),
         kind: z.enum(["character", "creature", "prop", "environment"]),
-        description: z.string().optional(),
+        description: z.string().optional().describe("Visual details for the concept."),
       },
     },
     async (args) => {

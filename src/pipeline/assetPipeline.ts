@@ -9,7 +9,7 @@ import { buildAssetConceptPrompt, polyBudgetFor, type AssetKind } from "./concep
 import { combineEstimates, estimateConcept, estimateMeshy, gate, type Estimate } from "./gates";
 import { createImageTo3D, downloadBytes, toDataUri, waitForImageTo3D, type MeshyTask } from "./meshy";
 import { generateImage } from "./openaiImages";
-import { boxGlb, PLACEHOLDER_PNG } from "./placeholderGlb";
+import { boxGlb, placeholderPng } from "./placeholderGlb";
 import {
   findAsset,
   isModelKind,
@@ -36,6 +36,8 @@ export interface Clients {
   image(prompt: string, references: { name: string; bytes: Uint8Array; mime: string }[]): Promise<Uint8Array>;
   meshy(imageDataUri: string, targetPolycount: number, onProgress?: (t: MeshyTask) => void): Promise<Uint8Array>;
   blender(input: string, output: string, settings: object): { triangles: number; lods: number[]; height: number };
+  /** Placeholder clients: costs are recorded as $0. */
+  dryRun?: boolean;
 }
 
 export function liveClients(env = process.env, services: Services = defaultServices): Clients {
@@ -59,7 +61,8 @@ export function liveClients(env = process.env, services: Services = defaultServi
 /** No network, no spend: placeholder concept and box model. Blender still runs if available. */
 export function dryRunClients(env = process.env): Clients {
   return {
-    image: async () => PLACEHOLDER_PNG,
+    dryRun: true,
+    image: async (prompt) => placeholderPng(prompt.split("\n")[0] ?? prompt),
     meshy: async () => boxGlb(),
     blender: (input, output, settings) => runBlenderCleanup(input, output, settings, env.BLENDER ?? "blender"),
   };
@@ -126,6 +129,7 @@ export class AssetPipeline {
   }
 
   private cost(e: Estimate): CostEntry {
+    if (this.clients.dryRun) return { service: e.service, step: `${e.step} (dry run)`, usd: 0, at: new Date().toISOString() };
     return { service: e.service, step: e.step, usd: e.usd, credits: e.credits, at: new Date().toISOString() };
   }
 

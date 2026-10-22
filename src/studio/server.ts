@@ -14,7 +14,7 @@ import type { Bible } from "../bible/types";
 import { validateBible } from "../bible/validate";
 import { AssetPipeline, dryRunClients, liveClients, loadBibleFrom } from "../pipeline/assetPipeline";
 import type { AssetKind } from "../pipeline/conceptPrompt";
-import { ApprovalRequired, estimateConcept, estimateMeshy } from "../pipeline/gates";
+import { ApprovalRequired, estimateConcept, estimateMeshy, estimateMusic, estimateSfx, estimateVoiceLines } from "../pipeline/gates";
 import { loadRegistry } from "../pipeline/registry";
 import { decide, loadApprovals } from "./approvals";
 import { LAYERS, setBibleApproved, setEntityModel, writeLayer, type Layer } from "./bible";
@@ -122,10 +122,37 @@ export class Studio {
     let d = this.directors.get(name);
     if (!d) {
       d = new Director(this.dir(name), { claudeBin: this.opts.claudeBin, dryRunTools: this.opts.dryRunTools });
-      d.on((e) => this.broadcast(name, "director", e));
+      d.on((e) => {
+        this.broadcast(name, "director", e);
+        if (e.type === "done" || e.type === "error") setTimeout(() => this.notifyApprovals(name), 50);
+      });
       this.directors.set(name, d);
     }
     return d;
+  }
+
+  private notified = new Map<string, Set<string>>();
+  private readonly startedAt = new Date().toISOString();
+
+  /**
+   * Tells the director about approval decisions it hasn't heard about yet. If
+   * it is busy, this runs again when its turn ends, so no decision is missed.
+   */
+  notifyApprovals(name: string) {
+    const d = this.director(name);
+    if (d.running) return;
+    const seen = this.notified.get(name) ?? new Set<string>();
+    this.notified.set(name, seen);
+    const fresh = loadApprovals(this.dir(name)).filter((a) => (a.status === "approved" || a.status === "rejected") && !seen.has(a.id) && (a.decidedAt ?? "") >= this.startedAt);
+    if (!fresh.length) return;
+    fresh.forEach((a) => seen.add(a.id));
+    const approved = fresh.filter((a) => a.status === "approved");
+    const rejected = fresh.filter((a) => a.status === "rejected");
+    const lines = [
+      ...(approved.length ? [`The user approved: ${approved.map((a) => `${a.id} (${a.summary})`).join("; ")}. Run them now with the same arguments.`] : []),
+      ...(rejected.length ? [`The user rejected: ${rejected.map((a) => `${a.id} (${a.summary})`).join("; ")}. Don't run those.`] : []),
+    ];
+    void d.send(`[studio] ${lines.join(" ")}`).catch(() => {});
   }
 
   broadcast(name: string, event: string, data: unknown) {
@@ -207,7 +234,13 @@ export class Studio {
       git,
       chat: { running: !!d?.running, history: (d ?? this.director(name)).history().slice(-200) },
       jobs: [...this.jobs.values()].filter((j) => j.project === name).slice(-10),
-      estimates: { concept: estimateConcept(), meshy: estimateMeshy() },
+      estimates: {
+        concept: estimateConcept(),
+        meshy: estimateMeshy(),
+        sfx: estimateSfx(),
+        musicPerMinute: estimateMusic(60).usd,
+        voicePer1kChars: estimateVoiceLines([{ text: "x".repeat(1000) }]).usd,
+      },
       screenshots: listScreenshots(dir),
       dryRunTools: !!this.opts.dryRunTools,
     };
@@ -226,9 +259,11 @@ export class Studio {
       if (method === "GET") return send(res, 200, { projects: listProjects(this.root), starters: STARTERS }), true;
       if (method === "POST") {
         const body = await readJson(req);
-        const dir = createProject(
-          { name: String(body.name ?? ""), starter: String(body.starter ?? "dark-fantasy") as Starter, pitch: body.pitch as string, title: body.title as string },
-          this.root,
+        const dir = badRequest(() =>
+          createProject(
+            { name: String(body.name ?? ""), starter: String(body.starter ?? "dark-fantasy") as Starter, pitch: body.pitch as string, title: body.title as string },
+            this.root,
+          ),
         );
         try {
           checkpoint(dir, `New project ${body.name}`);
@@ -277,7 +312,8 @@ export class Studio {
 
       case "PUT bible": {
         if (!LAYERS.includes(c as Layer)) throw new HttpError(400, "Unknown layer");
-        const out = writeLayer(dir, c as Layer, await readJson(req), "user");
+        const data = await readJson(req);
+        const out = badRequest(() => writeLayer(dir, c as Layer, data, "user"));
         return send(res, 200, out), true;
       }
 
@@ -291,9 +327,7 @@ export class Studio {
       case "POST approvals": {
         const body = await readJson(req);
         const r = decide(dir, String(c), !!body.approve);
-        const d = this.director(name);
-        if (body.notifyDirector !== false && !d.running)
-          void d.send(`[studio] The user ${r.status} request ${r.id} (${r.summary}).${r.status === "approved" ? " Run it now." : ""}`).catch(() => {});
+        if (body.notifyDirector !== false) this.notifyApprovals(name);
         return send(res, 200, r), true;
       }
 
@@ -384,7 +418,7 @@ export class Studio {
     const vite =
       this.opts.vite === false
         ? undefined
-        : await createVite({ root: REPO_ROOT, appType: "mpa", server: { middlewareMode: true, hmr: { server } }, logLevel: "warn" });
+        : await createVite({ root: REPO_ROOT, appType: "mpa", server: { middlewareMode: true, ws: { server } }, logLevel: "warn" });
     server.on("request", (req, res) => {
       // The studio lives at /, the game preview at /game (same page as the shareable build).
       const u = new URL(req.url ?? "/", "http://x");
@@ -413,6 +447,15 @@ export class Studio {
         await new Promise<void>((r) => server.close(() => r()));
       },
     };
+  }
+}
+
+/** Turns a validation error from user input into a 400. */
+function badRequest<T>(fn: () => T): T {
+  try {
+    return fn();
+  } catch (e) {
+    throw new HttpError(400, (e as Error).message);
   }
 }
 

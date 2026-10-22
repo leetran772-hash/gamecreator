@@ -94,8 +94,11 @@ export function slugify(s: string): string {
   return normalizeSubject(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "asset";
 }
 
-export function uniqueId(reg: Registry, subject: string, maxLength = 64): string {
-  const base = slugify(subject).slice(0, maxLength).replace(/-$/, "");
+export function uniqueId(reg: Registry, subject: string, maxLength = 32): string {
+  const slug = slugify(subject);
+  // Cut at a word boundary so ids stay short and readable.
+  const cut = slug.length <= maxLength ? slug : slug.slice(0, maxLength).replace(/-[^-]*$/, "") || slug.slice(0, maxLength);
+  const base = cut.replace(/-$/, "");
   let id = base;
   for (let i = 2; reg.assets.some((a) => a.id === id); i++) id = `${base}-${i}`;
   return id;

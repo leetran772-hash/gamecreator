@@ -56,7 +56,7 @@ for (const k of ["crash", "softlock", "unreachable"]) {
 }
 
 console.log("\nAssets");
-const assetQa = checkProjectAssets("projects/dungeon-crawler");
+const assetQa = checkProjectAssets(resolve(values.project!));
 assetQa.issues.forEach((i) => fail(`${i.assetId}: [${i.check}] ${i.message}`));
 if (!assetQa.issues.length) console.log(`  ok (${assetQa.checked} asset(s) checked)`);
 

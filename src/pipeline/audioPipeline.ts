@@ -27,6 +27,8 @@ export interface AudioClients {
   sfx(req: SfxRequest): Promise<Uint8Array>;
   music(prompt: string, lengthMs: number): Promise<Uint8Array>;
   tts(voiceId: string, text: string): Promise<Uint8Array>;
+  /** Placeholder clients: costs are recorded as $0. */
+  dryRun?: boolean;
 }
 
 /** Real ElevenLabs calls; needs ELEVENLABS_API_KEY. */
@@ -56,6 +58,7 @@ export function dryRunAudioClients(tools: MediaTools = mediaTools()): AudioClien
     }
   };
   return {
+    dryRun: true,
     sfx: async (req) => tone(req.durationSeconds ?? 1.5, 660),
     music: async (_p, ms) => tone(Math.min(ms / 1000, 8), 220),
     tts: async (_v, text) => tone(Math.min(6, Math.max(1, text.length * 0.06)), 330),
@@ -182,6 +185,7 @@ export class AudioPipeline {
   }
 
   private cost(e: Estimate, usd = e.usd): CostEntry {
+    if (this.clients.dryRun) return { service: e.service, step: `${e.step} (dry run)`, usd: 0, at: new Date().toISOString() };
     return { service: e.service, step: e.step, usd, at: new Date().toISOString() };
   }
 
