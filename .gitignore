@@ -4,3 +4,5 @@ dist
 qa-output
 projects/*/.studio/
 .claude/worktrees/
+build
+.godot

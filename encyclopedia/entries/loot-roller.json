@@ -18,7 +18,7 @@
   ],
   "implementations": {
     "threejs": "src/core/loot.ts",
-    "godot": null
+    "godot": "engines/godot/dungeon-crawler/core/loot.gd"
   },
   "dependencies": {
     "hard": [

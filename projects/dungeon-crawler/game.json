@@ -1,6 +1,6 @@
 {
   "template": "dungeon-crawler",
-  "engines": ["threejs"],
+  "engines": ["threejs", "godot"],
   "modules": ["seeder", "level-design", "dnd-combat", "loot-roller", "inventory", "ui-hud"],
   "defaultSeed": "ashen-1",
   "floors": 5,

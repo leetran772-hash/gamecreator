@@ -18,7 +18,7 @@
   ],
   "implementations": {
     "threejs": "src/core/level.ts",
-    "godot": null
+    "godot": "engines/godot/dungeon-crawler/core/level.gd"
   },
   "dependencies": {
     "hard": [
@@ -28,6 +28,7 @@
   },
   "status": "prototype",
   "gotchas": [
-    "Small maps can fail to place minRooms; the generator throws instead of returning a broken level."
+    "Small maps can fail to place minRooms; the generator throws instead of returning a broken level.",
+    "Godot port: Array.sort_custom is not stable but JS sort is; rooms are ordered with a stable insertion sort so tied room centres keep the same order."
   ]
 }

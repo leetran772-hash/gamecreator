@@ -15,7 +15,7 @@
   ],
   "implementations": {
     "threejs": "src/core/seeder.ts",
-    "godot": null
+    "godot": "engines/godot/dungeon-crawler/core/seeder.gd"
   },
   "dependencies": {
     "hard": [],
@@ -24,6 +24,7 @@
   "status": "stable",
   "gotchas": [
     "Never share one stream between two consumers; fork by name.",
-    "Key per-entity streams by a stable uid (e.g. loot:<enemyUid>), not by spawn order."
+    "Key per-entity streams by a stable uid (e.g. loot:<enemyUid>), not by spawn order.",
+    "Godot port: GDScript ints are 64-bit signed, so keep every 32-bit value unsigned and mask with 0xFFFFFFFF after each op; split Math.imul so the product stays inside 64 bits; hash UTF-16 code units (charCodeAt), not code points. tests/godot.test.ts checks the streams bit-for-bit."
   ]
 }
