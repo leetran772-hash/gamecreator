@@ -59,6 +59,102 @@
       ],
       "concept": "assets/concepts/brann-dwarven-miner-with-lantern.png",
       "conceptPrompt": "Concept art of Brann, dwarven miner with lantern for a 3D game asset.\nGame style: cozy-spooky storybook, chunky low-poly, cold blue frost lit by warm amber lantern glow. Chunky, rounded low-poly with a storybook feel. The world is cold blues (frosted stone, ice crystals, blue spirit glow); everything warm and friendly is amber (lantern, loot, Brann, stair shafts down). Soft frost rim-light, lantern pool of warm light around the player, darkness beyond. Spooky but never gory: spirits are glowing, translucent and a little cute.\nUse only colors close to this palette: night #070b14, deepIce #13243a, stone #3a4352, frost #7fc8f0, rime #d8eefa, amber #ffb347, ember #e86a2c, wood #7a4e2d, spirit #4fe0ff, copper #c9783f.\nSimple shapes that read well as a low-poly 3D model.\nFull body, standing in a neutral A-pose, arms slightly away from the body, no props overlapping the body.\nSingle object, centered, on a plain neutral light-grey background.\nFront or three-quarter view, orthographic feel: no perspective distortion, nothing cropped at the edges.\nEven, soft studio lighting with no heavy or cast shadows (they would get baked into the textures).\nNo text, labels, frames, watermarks or extra objects."
+    },
+    {
+      "id": "sfx-crunchy-pickaxe-striking-ice-short-sharp",
+      "subject": "sfx: Crunchy pickaxe striking ice, short sharp impact with icy tinkle and cavern reverb",
+      "kind": "sfx",
+      "description": "Crunchy pickaxe striking ice, short sharp impact with icy tinkle and cavern reverb",
+      "status": "cleaned",
+      "source": "generated",
+      "locked": false,
+      "tags": [
+        "sfx",
+        "sfx:hit"
+      ],
+      "bibleVersion": 8,
+      "costs": [
+        {
+          "service": "elevenlabs",
+          "step": "sfx (dry run)",
+          "usd": 0,
+          "at": "2026-10-22T07:19:01.080Z"
+        }
+      ],
+      "audioPrompt": "Crunchy pickaxe striking ice, short sharp impact with icy tinkle and cavern reverb. Sound style: Crunchy pick-on-ice hits, tinkling icicles, crackling lantern flame, creaking timbers, breathy whooshes and soft chimes for spirits, all with cavernous reverb.",
+      "audio": {
+        "file": "assets/audio/sfx-crunchy-pickaxe-striking-ice-short-sharp.ogg",
+        "duration": 1,
+        "lufs": -14
+      },
+      "files": {
+        "raw": "assets/audio/raw/sfx-crunchy-pickaxe-striking-ice-short-sharp.wav"
+      }
+    },
+    {
+      "id": "sfx-warm-item-pickup-soft-copper-clink-with-a",
+      "subject": "sfx: Warm item pickup: soft copper clink with a gentle lantern-flame crackle and bright chime",
+      "kind": "sfx",
+      "description": "Warm item pickup: soft copper clink with a gentle lantern-flame crackle and bright chime",
+      "status": "cleaned",
+      "source": "generated",
+      "locked": false,
+      "tags": [
+        "sfx",
+        "sfx:pickup"
+      ],
+      "bibleVersion": 8,
+      "costs": [
+        {
+          "service": "elevenlabs",
+          "step": "sfx (dry run)",
+          "usd": 0,
+          "at": "2026-10-22T07:19:01.655Z"
+        }
+      ],
+      "audioPrompt": "Warm item pickup: soft copper clink with a gentle lantern-flame crackle and bright chime. Sound style: Crunchy pick-on-ice hits, tinkling icicles, crackling lantern flame, creaking timbers, breathy whooshes and soft chimes for spirits, all with cavernous reverb.",
+      "audio": {
+        "file": "assets/audio/sfx-warm-item-pickup-soft-copper-clink-with-a.ogg",
+        "duration": 1,
+        "lufs": -14
+      },
+      "files": {
+        "raw": "assets/audio/raw/sfx-warm-item-pickup-soft-copper-clink-with-a.wav"
+      }
+    },
+    {
+      "id": "music-explore",
+      "subject": "music: explore",
+      "kind": "music",
+      "description": "Sparse music-box and celesta over low cello drone, distant wind, 70 bpm, loopable",
+      "status": "cleaned",
+      "source": "generated",
+      "locked": false,
+      "tags": [
+        "music",
+        "explore",
+        "music:explore"
+      ],
+      "bibleVersion": 8,
+      "costs": [
+        {
+          "service": "elevenlabs",
+          "step": "music (dry run)",
+          "usd": 0,
+          "at": "2026-10-22T07:19:03.150Z"
+        }
+      ],
+      "audioPrompt": "Instrumental background music for the game \"Lanternfall\" (fantasy roguelike dungeon crawler; cozy-spooky storybook, chunky low-poly, cold blue frost lit by warm amber lantern glow). Mood \"explore\": Sparse music-box and celesta over low cello drone, distant wind, 70 bpm, loopable. Must loop seamlessly: no intro or fade-out. No vocals.",
+      "audio": {
+        "file": "assets/audio/music-explore.ogg",
+        "duration": 8,
+        "lufs": -16,
+        "loopStart": 0,
+        "loopEnd": 8
+      },
+      "files": {
+        "raw": "assets/audio/raw/music-explore.wav"
+      }
     }
   ]
 }

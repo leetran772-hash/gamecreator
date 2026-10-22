@@ -62,7 +62,7 @@
   {
     "id": "ap-mvj7ldd7-5xw",
     "createdAt": "2026-10-22T07:17:54.283Z",
-    "status": "approved",
+    "status": "used",
     "estimate": {
       "step": "sfx",
       "service": "elevenlabs",
@@ -85,7 +85,7 @@
   {
     "id": "ap-mvj7le9s-67g",
     "createdAt": "2026-10-22T07:17:55.456Z",
-    "status": "approved",
+    "status": "used",
     "estimate": {
       "step": "sfx",
       "service": "elevenlabs",
@@ -108,7 +108,7 @@
   {
     "id": "ap-mvj7lede-4u3",
     "createdAt": "2026-10-22T07:17:55.586Z",
-    "status": "approved",
+    "status": "used",
     "estimate": {
       "step": "music",
       "service": "elevenlabs",

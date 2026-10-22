@@ -28,5 +28,11 @@
     "step": "director turn",
     "usd": 0.14749820000000002,
     "at": "2026-10-22T07:18:07.964Z"
+  },
+  {
+    "service": "anthropic",
+    "step": "director turn",
+    "usd": 0.1864421999999999,
+    "at": "2026-10-22T07:18:56.922Z"
   }
 ]
