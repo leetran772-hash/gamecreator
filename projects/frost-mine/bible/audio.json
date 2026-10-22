@@ -2,17 +2,17 @@
   "voices": {
     "hero": {
       "voiceId": "",
-      "notes": "Gruff, clipped, ex-marine."
+      "notes": "Warm, gravelly dwarven baritone with a soft Scots lilt; gruff but kind, short sentences."
     },
-    "ship": {
+    "lantern": {
       "voiceId": "",
-      "notes": "Calm station AI, slightly glitchy."
+      "notes": "Small, bright, crackly voice of a fire-spirit; quick and chatty, gets squeaky when scared."
     }
   },
-  "sfxStyle": "Analog synth blips, servo whirs, laser zaps with spring reverb, metal clanks.",
+  "sfxStyle": "Crunchy pick-on-ice hits, tinkling icicles, crackling lantern flame, creaking timbers, breathy whooshes and soft chimes for spirits, all with cavernous reverb.",
   "musicMoods": {
-    "explore": "Slow analog synth pads, arpeggio, 80 bpm, loopable",
-    "combat": "Driving synthwave bass, 128 bpm, loopable",
-    "victory": "Bright synth brass stab with arpeggio tail"
+    "explore": "Sparse music-box and celesta over low cello drone, distant wind, 70 bpm, loopable",
+    "combat": "Driving frame drums and plucked strings with icy glass textures, 120 bpm, loopable",
+    "victory": "Warm brass-and-fiddle dwarven folk sting with a hearthfire crackle tail"
   }
 }

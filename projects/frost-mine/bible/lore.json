@@ -1,38 +1,38 @@
 {
-  "tone": "Lonely and tense with dry humour from the station AI.",
+  "tone": "Cozy-spooky: hushed, frosty and a little eerie, warmed by lantern light, stubborn dwarven grit and gentle humour from a talking lantern.",
   "rules": [
-    "Turn-based: every action is one turn; hostiles act after you.",
-    "Fire: d20 + aim vs armor rating. Natural 20 is a critical hit.",
-    "Reach the escape pod on deck 5."
+    "Turn-based: every action is one turn; spirits act after you.",
+    "Swing: d20 + attack bonus vs armor class. Natural 20 is a critical hit, natural 1 always misses.",
+    "Dig down through five levels of the Deepfrost Mine and reach your trapped crew on level 5."
   ],
   "factions": [
     {
-      "id": "drones",
-      "name": "Maintenance Drones",
-      "description": "Still following a corrupted work order."
+      "id": "frostwisps",
+      "name": "The Rime Host",
+      "description": "Ice spirits woken when the miners broke into an old frozen vein. They hate warmth and light."
     },
     {
-      "id": "mutants",
-      "name": "Spore Crew",
-      "description": "What's left of the mining crew."
+      "id": "frozen",
+      "name": "The Hoarfrozen",
+      "description": "Mine golems and old tunnel-wardens the spirits have filled with frost and set to guard the deep."
     }
   ],
   "characters": [
     {
       "id": "hero",
-      "name": "Vance",
+      "name": "Brann Emberbeard",
       "role": "player",
-      "description": "Salvage contractor who took the wrong job."
+      "description": "Stout dwarven shift-foreman who refused to leave anyone behind. Carries the last lit lantern in the mine."
     },
     {
-      "id": "ship",
-      "name": "KEPLER",
+      "id": "lantern",
+      "name": "Pip",
       "role": "guide",
-      "description": "The station AI, polite and unreliable."
+      "description": "A small fire-spirit living in Brann's lantern. Chatty, nervous of the dark, fiercely loyal."
     }
   ],
   "player": {
-    "name": "Vance",
+    "name": "Brann",
     "hp": 24,
     "ac": 12,
     "attackBonus": 3,
@@ -40,11 +40,11 @@
     "material": "hero"
   },
   "bestiary": {
-    "scuttler": {
-      "id": "scuttler",
-      "name": "Scuttle Drone",
-      "description": "Palm-sized repair bot with a cutting laser.",
-      "material": "droneMat",
+    "wisp": {
+      "id": "wisp",
+      "name": "Frost Wisp",
+      "description": "A drifting mote of cold blue light that nips at warm fingers.",
+      "material": "wispMat",
       "hp": 4,
       "ac": 10,
       "attackBonus": 2,
@@ -53,13 +53,13 @@
       "minFloor": 1,
       "spawnWeight": 5,
       "sightRange": 6,
-      "lootTable": "scrap"
+      "lootTable": "wisp"
     },
-    "welder": {
-      "id": "welder",
-      "name": "Welder Drone",
-      "description": "Hovering arc welder.",
-      "material": "droneMat",
+    "icebat": {
+      "id": "icebat",
+      "name": "Rime Bat",
+      "description": "A cave bat glazed in ice, shrieking frost.",
+      "material": "wispMat",
       "hp": 9,
       "ac": 12,
       "attackBonus": 3,
@@ -68,13 +68,13 @@
       "minFloor": 1,
       "spawnWeight": 4,
       "sightRange": 7,
-      "lootTable": "scrap"
+      "lootTable": "wisp"
     },
-    "sporeling": {
-      "id": "sporeling",
-      "name": "Sporeling",
-      "description": "A crew member, mostly fungus now.",
-      "material": "mutantMat",
+    "shade": {
+      "id": "shade",
+      "name": "Frostbitten Shade",
+      "description": "The ghostly echo of a long-lost miner, still swinging a pick.",
+      "material": "shadeMat",
       "hp": 14,
       "ac": 9,
       "attackBonus": 3,
@@ -83,13 +83,13 @@
       "minFloor": 2,
       "spawnWeight": 3,
       "sightRange": 4,
-      "lootTable": "crew"
+      "lootTable": "miner"
     },
-    "guard": {
-      "id": "guard",
-      "name": "Security Mech",
-      "description": "Bipedal, armoured, polite.",
-      "material": "guardMat",
+    "golem": {
+      "id": "golem",
+      "name": "Hoarfrost Golem",
+      "description": "A stone mine-golem packed with ice, slow and very heavy.",
+      "material": "golemMat",
       "hp": 16,
       "ac": 13,
       "attackBonus": 4,
@@ -98,13 +98,13 @@
       "minFloor": 3,
       "spawnWeight": 3,
       "sightRange": 8,
-      "lootTable": "security"
+      "lootTable": "deep"
     },
-    "core": {
-      "id": "core",
-      "name": "Rogue Subroutine",
-      "description": "A hologram with teeth.",
-      "material": "aiMat",
+    "wraith": {
+      "id": "wraith",
+      "name": "Glacier Wraith",
+      "description": "A tall veil of snow and blue fire. The Rime Host's warden.",
+      "material": "wraithMat",
       "hp": 22,
       "ac": 14,
       "attackBonus": 5,
@@ -113,117 +113,117 @@
       "minFloor": 4,
       "spawnWeight": 2,
       "sightRange": 9,
-      "lootTable": "security"
+      "lootTable": "deep"
     }
   },
   "items": {
-    "pistol": {
-      "id": "pistol",
-      "name": "Rivet Pistol",
+    "pick": {
+      "id": "pick",
+      "name": "Trusty Pick",
       "kind": "weapon",
       "rarity": "common",
       "stats": {
         "attackBonus": 0,
         "damage": "1d4+1"
       },
-      "icon": "🔫"
+      "icon": "⛏️"
     },
-    "laser": {
-      "id": "laser",
-      "name": "Mining Laser",
+    "hammer": {
+      "id": "hammer",
+      "name": "Forge Hammer",
       "kind": "weapon",
       "rarity": "uncommon",
       "stats": {
         "attackBonus": 1,
         "damage": "1d6+1"
       },
-      "icon": "🔦"
+      "icon": "🔨"
     },
-    "railgun": {
-      "id": "railgun",
-      "name": "Rail Driver",
+    "emberaxe": {
+      "id": "emberaxe",
+      "name": "Ember Axe",
       "kind": "weapon",
       "rarity": "rare",
       "stats": {
         "attackBonus": 1,
         "damage": "1d10+2"
       },
-      "icon": "⚡"
+      "icon": "🪓"
     },
-    "plasma": {
-      "id": "plasma",
-      "name": "Plasma Caster",
+    "sunpick": {
+      "id": "sunpick",
+      "name": "Sunforged Pick",
       "kind": "weapon",
       "rarity": "epic",
       "stats": {
         "attackBonus": 2,
         "damage": "2d6+2"
       },
-      "icon": "☄️"
+      "icon": "🔥"
     },
-    "vest": {
-      "id": "vest",
-      "name": "Padded Vest",
+    "woolcoat": {
+      "id": "woolcoat",
+      "name": "Wool Mining Coat",
       "kind": "armor",
       "rarity": "common",
       "stats": {
         "armorClass": 13
       },
-      "icon": "🦺"
+      "icon": "🧥"
     },
-    "hardsuit": {
-      "id": "hardsuit",
-      "name": "Hardsuit",
+    "leathers": {
+      "id": "leathers",
+      "name": "Riveted Leathers",
       "kind": "armor",
       "rarity": "uncommon",
       "stats": {
         "armorClass": 15
       },
-      "icon": "🧑‍🚀"
+      "icon": "🦺"
     },
-    "exo": {
-      "id": "exo",
-      "name": "Exo-frame",
+    "runemail": {
+      "id": "runemail",
+      "name": "Hearth-Rune Mail",
       "kind": "armor",
       "rarity": "rare",
       "stats": {
         "armorClass": 17
       },
-      "icon": "🤖"
+      "icon": "🛡️"
     },
-    "medpatch": {
-      "id": "medpatch",
-      "name": "Med Patch",
+    "cocoa": {
+      "id": "cocoa",
+      "name": "Flask of Hot Cocoa",
       "kind": "potion",
       "rarity": "common",
       "stats": {
         "heal": "2d4+4"
       },
-      "icon": "🩹"
+      "icon": "☕"
     },
-    "nanokit": {
-      "id": "nanokit",
-      "name": "Nanite Kit",
+    "emberbrew": {
+      "id": "emberbrew",
+      "name": "Emberbrew",
       "kind": "potion",
       "rarity": "rare",
       "stats": {
         "heal": "4d4+8"
       },
-      "icon": "💉"
+      "icon": "🍺"
     },
-    "chip": {
-      "id": "chip",
-      "name": "Credit Chip",
+    "coin": {
+      "id": "coin",
+      "name": "Copper Coin",
       "kind": "treasure",
       "rarity": "common",
       "stats": {
         "value": 10
       },
-      "icon": "💳"
+      "icon": "🪙"
     },
-    "core_sample": {
-      "id": "core_sample",
-      "name": "Exotic Core Sample",
+    "heartgem": {
+      "id": "heartgem",
+      "name": "Frostheart Gem",
       "kind": "treasure",
       "rarity": "rare",
       "stats": {
@@ -233,80 +233,80 @@
     }
   },
   "lootTables": {
-    "scrap": {
+    "wisp": {
       "rolls": 1,
       "nothingWeight": 5,
       "entries": [
         {
-          "item": "chip",
+          "item": "coin",
           "weight": 3
         },
         {
-          "item": "medpatch",
+          "item": "cocoa",
           "weight": 2
         }
       ]
     },
-    "crew": {
+    "miner": {
       "rolls": 1,
       "nothingWeight": 3,
       "entries": [
         {
-          "item": "chip",
+          "item": "coin",
           "weight": 4
         },
         {
-          "item": "medpatch",
+          "item": "cocoa",
           "weight": 3
         },
         {
-          "item": "laser",
+          "item": "hammer",
           "weight": 1
         },
         {
-          "item": "vest",
+          "item": "woolcoat",
           "weight": 1
         },
         {
-          "item": "hardsuit",
+          "item": "leathers",
           "weight": 0.5
         }
       ]
     },
-    "security": {
+    "deep": {
       "rolls": 2,
       "nothingWeight": 4,
       "entries": [
         {
-          "item": "chip",
+          "item": "coin",
           "weight": 4
         },
         {
-          "item": "medpatch",
+          "item": "cocoa",
           "weight": 3
         },
         {
-          "item": "nanokit",
+          "item": "emberbrew",
           "weight": 1
         },
         {
-          "item": "railgun",
+          "item": "emberaxe",
           "weight": 1
         },
         {
-          "item": "hardsuit",
+          "item": "leathers",
           "weight": 1
         },
         {
-          "item": "exo",
+          "item": "runemail",
           "weight": 0.4
         },
         {
-          "item": "plasma",
+          "item": "sunpick",
           "weight": 0.2
         },
         {
-          "item": "core_sample",
+          "item": "heartgem",
           "weight": 0.5
         }
       ]
@@ -316,31 +316,31 @@
       "nothingWeight": 1,
       "entries": [
         {
-          "item": "medpatch",
+          "item": "cocoa",
           "weight": 4
         },
         {
-          "item": "chip",
+          "item": "coin",
           "weight": 3
         },
         {
-          "item": "laser",
+          "item": "hammer",
           "weight": 1
         },
         {
-          "item": "vest",
+          "item": "woolcoat",
           "weight": 1.5
         },
         {
-          "item": "hardsuit",
+          "item": "leathers",
           "weight": 0.7
         },
         {
-          "item": "railgun",
+          "item": "emberaxe",
           "weight": 0.4
         },
         {
-          "item": "core_sample",
+          "item": "heartgem",
           "weight": 0.3
         }
       ]

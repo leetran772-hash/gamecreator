@@ -1,71 +1,73 @@
 {
   "palette": {
-    "void": "#05060a",
-    "hull": "#2d3440",
-    "hullLight": "#4b5566",
-    "neon": "#3cf2ff",
-    "magenta": "#ff3caa",
-    "amber": "#ffb000",
-    "rust": "#a34a28",
-    "toxic": "#9cff3c",
-    "white": "#e6edf5",
-    "violet": "#7b4dff"
+    "night": "#070b14",
+    "deepIce": "#13243a",
+    "stone": "#3a4352",
+    "frost": "#7fc8f0",
+    "rime": "#d8eefa",
+    "amber": "#ffb347",
+    "ember": "#e86a2c",
+    "wood": "#7a4e2d",
+    "spirit": "#4fe0ff",
+    "copper": "#c9783f"
   },
   "materials": {
     "floor": {
-      "color": "hull",
-      "roughness": 0.6,
-      "metalness": 0.5
+      "color": "stone",
+      "roughness": 0.85,
+      "metalness": 0
     },
     "wall": {
-      "color": "hullLight",
-      "roughness": 0.5,
-      "metalness": 0.6
+      "color": "deepIce",
+      "roughness": 0.4,
+      "metalness": 0.1
     },
     "hero": {
-      "color": "white",
-      "roughness": 0.4,
-      "metalness": 0.3
-    },
-    "droneMat": {
-      "color": "amber",
-      "roughness": 0.3,
-      "metalness": 0.7,
+      "color": "wood",
+      "roughness": 0.7,
+      "metalness": 0.1,
       "emissive": "amber"
     },
-    "mutantMat": {
-      "color": "toxic",
-      "roughness": 0.5,
-      "metalness": 0,
-      "emissive": "toxic"
-    },
-    "guardMat": {
-      "color": "rust",
-      "roughness": 0.5,
-      "metalness": 0.6
-    },
-    "aiMat": {
-      "color": "magenta",
+    "wispMat": {
+      "color": "spirit",
       "roughness": 0.2,
-      "metalness": 0.4,
-      "emissive": "magenta"
+      "metalness": 0,
+      "emissive": "spirit"
+    },
+    "shadeMat": {
+      "color": "rime",
+      "roughness": 0.4,
+      "metalness": 0,
+      "emissive": "frost"
+    },
+    "golemMat": {
+      "color": "stone",
+      "roughness": 0.8,
+      "metalness": 0.1,
+      "emissive": "frost"
+    },
+    "wraithMat": {
+      "color": "frost",
+      "roughness": 0.2,
+      "metalness": 0.1,
+      "emissive": "spirit"
     },
     "loot": {
-      "color": "neon",
-      "roughness": 0.2,
-      "metalness": 0.6,
-      "emissive": "neon"
+      "color": "amber",
+      "roughness": 0.3,
+      "metalness": 0.5,
+      "emissive": "amber"
     },
     "stairs": {
-      "color": "violet",
-      "roughness": 0.4,
+      "color": "ember",
+      "roughness": 0.6,
       "metalness": 0.2,
-      "emissive": "violet"
+      "emissive": "ember"
     }
   },
   "scene": {
-    "background": "void",
-    "light": "neon"
+    "background": "night",
+    "light": "amber"
   },
   "polyBudgets": {
     "character": 8000,
@@ -73,6 +75,6 @@
     "environment": 1500
   },
   "textureResolution": 1024,
-  "styleNotes": "Hard-edged low-poly hardware, glowing neon accents, dark hull plates, CRT-era UI feel.",
+  "styleNotes": "Chunky, rounded low-poly with a storybook feel. The world is cold blues (frosted stone, ice crystals, blue spirit glow); everything warm and friendly is amber (lantern, loot, Brann, stair shafts down). Soft frost rim-light, lantern pool of warm light around the player, darkness beyond. Spooky but never gory: spirits are glowing, translucent and a little cute.",
   "concepts": []
 }

@@ -1,8 +1,8 @@
 {
-  "title": "Derelict Kepler-9",
+  "title": "Lanternfall",
   "pitch": "A frozen dwarven mine taken over by ice spirits. You play a lantern-carrying miner digging down five levels to rescue your crew. Cozy-spooky, blue and amber.",
-  "genre": "sci-fi roguelike dungeon crawler",
-  "style": "retro sci-fi, 80s paperback cover, chunky low-poly, neon on gunmetal",
-  "version": 1,
+  "genre": "fantasy roguelike dungeon crawler",
+  "style": "cozy-spooky storybook, chunky low-poly, cold blue frost lit by warm amber lantern glow",
+  "version": 6,
   "approved": false
 }
